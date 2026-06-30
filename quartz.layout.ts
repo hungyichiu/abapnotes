@@ -5,11 +5,25 @@ import * as Component from "./quartz/components"
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
   header: [],
-  afterBody: [],
+  afterBody: [
+    Component.PrevNext(),
+    Component.Comments({
+      provider: "giscus",
+      options: {
+        repo: "hungyichiu/my-digital-garden",
+        repoId: "R_kgDOSa3L9g",
+        category: "Announcements",
+        categoryId: "DIC_kwDOSa3L9s4C9AMp",
+        mapping: "pathname",
+        strict: false,
+        reactionsEnabled: true,
+        inputPosition: "top",
+      },
+    }),
+  ],
   footer: Component.Footer({
     links: {
-      GitHub: "https://github.com/jackyzha0/quartz",
-      "Discord Community": "https://discord.gg/cRFFHYye7t",
+      GitHub: "https://github.com/hungyichiu/abapnotes",
     },
   }),
 }
@@ -38,7 +52,9 @@ export const defaultContentPageLayout: PageLayout = {
         { Component: Component.ReaderMode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer({
+      filterFn: (node) => node.slugSegment !== "assets",
+    }),
   ],
   right: [
     Component.Graph(),
@@ -62,7 +78,9 @@ export const defaultListPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer({
+      filterFn: (node) => node.slugSegment !== "assets",
+    }),
   ],
   right: [],
 }

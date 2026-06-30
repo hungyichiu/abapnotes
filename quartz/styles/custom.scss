@@ -1,3 +1,38 @@
 @use "./base.scss";
 
-// put your custom CSS here!
+// Base font size increase
+html {
+  font-size: 18px;
+}
+
+// Eclipse ADT-style code blocks
+.shiki {
+  border-radius: 4px;
+  padding: 1em;
+  font-size: 0.85em;
+  line-height: 1.6;
+  border: 1px solid var(--lightgray);
+}
+
+// Light mode: Eclipse-like white background
+.shiki.light-plus {
+  background-color: #ffffff !important;
+}
+
+// Dark mode: VS Code dark
+:root[saved-theme="dark"] .shiki.dark-plus {
+  background-color: #1e1e1e !important;
+}
+
+// Inline code styling
+:not(pre) > code {
+  background-color: #dde6f5;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+
+:root[saved-theme="dark"] :not(pre) > code {
+  background-color: #1e2d4d;
+}
+
