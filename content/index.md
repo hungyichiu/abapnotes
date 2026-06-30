@@ -32,6 +32,12 @@ publish: true
 
 - [[15-SAP B1 User Query|User Query：查詢報表、FMS 與核決觸發]]
 - [[16-SQL預存程序-卡控與自動化|SQL 預存程序：卡控與自動化]]
+- [[17-網銀格式整合-全流程自動化|網銀格式整合：從需求分析到全流程自動化]]
+
+### 授權與使用者管理
+
+- [[24-使用者權限管理|核決範本授權者查詢]]
+- [[25-SAP-B1-授權管理|授權管理：機碼查詢、更新與故障排除]]
 
 ### 發票與稅務（台灣本地化）
 
@@ -41,7 +47,27 @@ publish: true
 
 ## ABAP 開發
 
-### Cheat Sheets
+### RICEFW 系列
 
+- [[01-ABAP-Classic-ALV|Classic ALV：從 Field Catalog 到互動報表]]
+- [[02-ABAP-New-Syntax|ABAP New Syntax：寫出更現代的 ABAP]]
+- [[03-ABAP-Smartforms|Smartforms：採購單批次列印與 control_parameter]]
+- [[04-ABAP-Enhancement|Enhancement：在不動標準程式的前提下擴充 SAP 功能]]
+- [[05-ABAP-BAdI|BAdI：業務邏輯擴充的現代解法]]
+- [[06-ABAP-RFC-BAPI|RFC 與 BAPI：SAP 對外通訊的標準介面]]
+
+### 工具與搜尋技巧
+
+- [[ABAP-BAdI搜尋方法|SAP BAdI 搜尋方法]]
+- [[ABAP-BAPI搜尋方法|SAP BAPI 搜尋方法]]
 - [[SAP-GUI-CheatSheet|SAP GUI Cheat Sheet]]
 - [[ABAP-Editor-SE38-CheatSheet|ABAP Editor（SE38）Cheat Sheet]]
+
+---
+
+## RAP (RESTful ABAP Programming)
+
+- [[RAP-Action|RAP Action：兩層式架構的 Action 開發實戰]]
+- [[RAP-Cross-BO|Cross-BO Interaction：跨商務物件互動]]
+- [[RAP-Cross-BO-Association|Cross-BO Associations：跨業務物件關聯]]
+- [[RAP-ValueHelp|Value Help (F4) 實作指南]]

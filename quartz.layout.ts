@@ -10,14 +10,15 @@ export const sharedPageComponents: SharedLayout = {
     Component.Comments({
       provider: "giscus",
       options: {
-        repo: "hungyichiu/my-digital-garden",
+        repo: "hungyichiu/abapnotes",
         repoId: "R_kgDOSa3L9g",
         category: "Announcements",
         categoryId: "DIC_kwDOSa3L9s4C9AMp",
         mapping: "pathname",
         strict: false,
         reactionsEnabled: true,
-        inputPosition: "top",
+        inputPosition: "bottom",
+        lang: "zh-TW",
       },
     }),
   ],
