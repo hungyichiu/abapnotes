@@ -122,7 +122,6 @@ publish: true
 - **Local Object**：自動填入 `$TMP`，不綁 Change Request，適合測試
 - **指派 Package**：之後必須綁定 Change Request，無法改回 Local Object
 
-![[Pasted image 20260513100100.png]]
 
 ---
 

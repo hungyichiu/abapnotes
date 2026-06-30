@@ -87,7 +87,7 @@ SAP B1 的版本與作業系統、SQL Server 版本之間有嚴格的相容性�
 
 **Step 1：使用 Component Wizard 執行 Uninstall**
 這是 SAP 官方的卸載入口，會處理大部分的應用程式元件。路徑通常位於安裝目錄下的 `Packages.x64` 資料夾。
-![[assets/SAP Business one 安裝項目.png|800]]
+![[SAP Business one 安裝項目.png|800]]
 **Step 2：從「已安裝的應用程式」逐一移除殘留**
 Component Wizard 完成後，進入控制台的「應用程式與功能」，移除所有仍顯示為已安裝的 SAP Business One 相關項目。
 
