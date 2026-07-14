@@ -1,4 +1,5 @@
 ---
+title: "RAP 跨商務物件互動 (Cross-BO Interaction)"
 tags:
   - abap
   - rap
@@ -10,6 +11,12 @@ publish: true
 ---
 
 # RAP 跨商務物件互動 (Cross-BO Interaction)
+
+## 為什麼需要跨 BO 互動
+
+實際業務情境很少侷限在單一 Business Object 內——建立一張「差旅訂單」可能需要同步處理「旅行社」主檔，擴充 SAP 標準銷售訂單也可能要串接自訂的物流追蹤資料。RAP 若沒有明確定義跨 BO 的關聯、操作與草稿範圍規則，這類跨物件的資料異動很容易在交易一致性或草稿狀態上出錯，這正是本篇要整理的核心機制。
+
+---
 
 ## 1. 核心機制：跨 BO 關聯 (Cross-BO Associations)
 跨 BO 場景是指兩個或多個獨立的商務物件（BO）之間進行互動。這主要透過在行為定義（BDEF）中宣告的**跨 BO 關聯**來實現。

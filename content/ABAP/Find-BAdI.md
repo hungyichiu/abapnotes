@@ -1,4 +1,5 @@
 ---
+title: "Find BAdI"
 tags:
   - ABAP
   - wiki
@@ -13,7 +14,7 @@ sources:
   - "[[ABAP-BAdIs-CheatSheet]]"
 ---
 
-# SAP BAdI 搜尋方法
+# Find BAdI
 
 > 遇到客製需求，第一步是確認 SAP 有沒有提供現成的 BAdI 切入點。找對了就用，找錯了白工。以下三種方法從快到準排列。
 

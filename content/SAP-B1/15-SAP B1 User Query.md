@@ -1,4 +1,5 @@
 ---
+title: "SAP B1 User Query：從查詢報表到 FMS 到核決觸發"
 tags:
   - SAP
   - B1
@@ -14,6 +15,8 @@ publish: true
 ## 什麼是 User Query
 
 SAP Business One 的 **User Query（使用者查詢）** 是一個內建的 SQL 查詢工具，讓顧問和使用者不需要寫 Add-on，只要一段 SQL，就能從系統資料庫中擷取、計算、呈現所需資料。
+
+沒有 User Query 之前，顧問若要客製一份報表或做欄位聯動，只能等 IT 開發 Add-on 或求助 SAP 原廠，開發週期動輒數天。User Query 讓現場顧問自己就能在數分鐘內完成，這也是它在 B1 導入案中被大量使用的原因。
 
 查詢儲存在 `OUQR`（使用者查詢主檔），以分類（`OQCN`）管理。進入路徑：
 
@@ -277,7 +280,7 @@ WHERE
 
 ---
 
-## 顧問建議
+## 實作提醒
 
 - **接手 MA 案先執行 FMS 清查 SQL**：摸清既有掛載位置再動手，避免改壞現有設定
 - **建立 FMS 命名規範**：查詢名稱建議包含觸發欄位與目標欄位，例如 `FMS_CardCode_CreditLine`，方便後續維護

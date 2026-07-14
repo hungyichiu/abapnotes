@@ -1,21 +1,24 @@
 ---
+title: "BAdI：業務邏輯擴充的現代解法"
 tags:
   - SAP
   - ABAP
   - BAdI
 created: 2026-05-15
-status: draft
+status: active
 area: resources
-publish: false
+publish: true
 ---
 
 # BAdI：業務邏輯擴充的現代解法
 
+> Enhancement 系列共三篇：[[04-Enhancement-1-總覽與傳統擴充機制|總覽與傳統擴充機制]] → BAdI(本篇)→ [[04-Enhancement-3-Enhancement-Framework|Enhancement Framework]]
+
 ## BAdI 是什麼
 
-**BAdI（Business Add-In）** 是 SAP Enhancement Framework 中專為業務邏輯擴充設計的機制。它的核心思想是：SAP 在標準程式的關鍵業務節點預先定義介面（Interface），顧問只需要建立實作類別（Class），填入自訂邏輯。
+**BAdI（Business Add-In）** 是 SAP 擴充機制演進中的第三代，核心思想是：SAP 在標準程式的關鍵業務節點預先定義介面（Interface），顧問只需要建立實作類別（Class），填入自訂邏輯。BAdI 與後面的 Enhancement Framework（第四代）是各自獨立的機制，不是後者的子集，只是兩者都可以透過 SE18/SE19 管理。
 
-與上一篇的 User Exit / Customer Exit 相比，BAdI 有幾個明顯優勢：
+與前一篇的 User Exit / Customer Exit 相比，BAdI 有幾個明顯優勢：
 
 | 特性 | User Exit / Customer Exit | BAdI |
 |------|--------------------------|------|
@@ -32,7 +35,7 @@ BAdI 本身也有兩個世代：
 
 | | Classic BAdI | New BAdI |
 |-|-------------|----------|
-| 管理交易碼 | SE18（定義）/ SE19（實作） | Enhancement Framework（SE18 also）|
+| 管理交易碼 | SE18（定義）/ SE19（實作） | 同樣是 SE18/SE19，但底層走 Enhancement Spot 機制 |
 | 實作類別 | Adapter Class | 直接 implement interface |
 | Filter | 有限 | 更靈活 |
 | 出現版本 | SAP Basis 4.6+ | SAP Basis 7.0+ |
@@ -180,9 +183,9 @@ Class 和 Enhancement Implementation 都必須分別 Activate。兩者缺一，B
 
 ---
 
-## 顧問建議
+## 實作提醒
 
-- **新開發優先選 BAdI**：如果 SAP 有提供對應的 BAdI，優先使用 BAdI 而非 Implicit Enhancement，因為 BAdI 有明確的介面定義和文件
+- **新開發優先選 BAdI**：如果 SAP 有提供對應的 BAdI，優先使用 BAdI 而非 [[04-Enhancement-3-Enhancement-Framework|Implicit Enhancement]]，因為 BAdI 有明確的介面定義和文件
 - **接手 MA 案先清查現有 Implementation**：SE19 → Edit → 搜尋現有的 Enhancement Implementation，了解哪些 BAdI 已被使用
 - **Method 參數要仔細看**：BAdI Method 的 Importing / Changing / Exporting 參數定義了你能讀什麼、改什麼——只有 Changing 和 Exporting 的值能影響標準流程
 
@@ -192,3 +195,5 @@ Class 和 Enhancement Implementation 都必須分別 Activate。兩者缺一，B
 
 - [[SAP ABAP 開發核心：RICEFW 學習路徑指南]]
 - [[8. ABAP OOPS 1-109]]
+
+**上一篇**：[[04-Enhancement-1-總覽與傳統擴充機制]] ｜ **下一篇**：[[04-Enhancement-3-Enhancement-Framework]]

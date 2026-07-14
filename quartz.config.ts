@@ -8,8 +8,8 @@ import * as Plugin from "./quartz/plugins"
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "ABAP Dev Notes",
-    pageTitleSuffix: " · ABAP Dev Notes",
+    pageTitle: "SAP 開發技術筆記",
+    pageTitleSuffix: " · SAP 開發技術筆記",
     enableSPA: true,
     enablePopovers: true,
     analytics: {
@@ -74,7 +74,7 @@ const config: QuartzConfig = {
       Plugin.Description(),
       Plugin.Latex({ renderEngine: "katex" }),
     ],
-    filters: [Plugin.RemoveDrafts()],
+    filters: [Plugin.ExplicitPublish()],
     emitters: [
       Plugin.AliasRedirects(),
       Plugin.ComponentResources(),

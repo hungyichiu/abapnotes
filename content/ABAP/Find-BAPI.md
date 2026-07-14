@@ -1,4 +1,5 @@
 ---
+title: "Find BAPI"
 tags:
   - ABAP
   - wiki
@@ -14,7 +15,7 @@ sources:
   - "[[BAPI - Tables and Functions of Business Objects]]"
 ---
 
-# SAP BAPI 搜尋方法
+# Find BAPI
 
 > 外部系統要呼叫 SAP 的業務邏輯（建立訂單、過帳、查詢主檔），找到正確的 BAPI 是整合開發的第一步。
 

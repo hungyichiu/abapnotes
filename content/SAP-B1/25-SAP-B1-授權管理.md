@@ -1,14 +1,15 @@
 ﻿---
+title: "SAP License Manager：機碼查詢、更新與故障排除"
 tags:
   - SAP
   - B1
 created: 2026-03-31
-status: draft
+status: active
 area: resources
-publish: false
+publish: true
 ---
 
-# SAP B1 授權管理：機碼查詢、更新與故障排除
+# SAP License Manager：機碼查詢、更新與故障排除
 
 ## 前言
 
@@ -209,7 +210,7 @@ B1 的授權以使用者類型區分：
 
 ---
 
-## 顧問建議
+## 實作提醒
 
 - **每個客戶維護一份授權資訊表**：記錄版本號、安裝號碼、系統號碼、Hardware Key、主機名稱、授權到期日，以及聯絡的 SAP Partner 窗口
 - **更新授權的 SOP 要文件化**：「取消指派 → 更新授權 → 重啟服務（如需要）→ 重新指派 → 驗證登入」，這個順序不能靠記憶

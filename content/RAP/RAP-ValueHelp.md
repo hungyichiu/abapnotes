@@ -1,4 +1,5 @@
 ---
+title: "RAP Value Help (F4) 實作指南"
 tags:
   - abap
   - rap
@@ -10,6 +11,12 @@ publish: true
 ---
 
 # RAP Value Help (F4) 實作指南
+
+## 為什麼需要 Value Help
+
+欄位如果只能手動輸入代碼（例如性別欄位只接受 `M`/`F`），使用者既記不住代碼、也無法在畫面上直接查詢有效值。Value Help（F4）讓欄位具備下拉選單與搜尋能力，並能控制畫面只顯示對使用者有意義的文字而非底層代碼，這是 Fiori Elements 開發中幾乎每個外鍵欄位都需要的基本功。
+
+---
 
 ## 步驟總覽
 

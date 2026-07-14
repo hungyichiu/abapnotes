@@ -1,15 +1,18 @@
 ---
+title: "Enhancement 總覽與傳統擴充機制：User Exit 與 Customer Exit"
 tags:
   - SAP
   - ABAP
   - Enhancement
 created: 2026-05-15
-status: draft
+status: active
 area: resources
-publish: false
+publish: true
 ---
 
-# Enhancement：在不動標準程式的前提下擴充 SAP 功能
+# Enhancement 總覽與傳統擴充機制：User Exit 與 Customer Exit
+
+> Enhancement 系列共三篇：總覽與傳統擴充機制(本篇)→ [[04-Enhancement-2-BAdI|BAdI]] → [[04-Enhancement-3-Enhancement-Framework|Enhancement Framework]]
 
 ## 問題情境
 
@@ -21,17 +24,18 @@ SAP 標準程式有其固定的業務邏輯。客戶通常有額外需求：「�
 
 ---
 
-## 三個世代的擴充機制
+## 四個世代的擴充機制
 
-SAP 的擴充機制有三個演進世代，現場仍會同時遇到：
+SAP 的擴充機制有四個演進世代，現場仍會同時遇到：
 
 | 世代 | 技術 | 特性 |
 |------|------|------|
 | 第一代 | **User Exit** | 硬編碼在標準程式中的空 FORM，直接填入邏輯 |
 | 第二代 | **Customer Exit**（SMOD/CMOD） | 由 SAP 定義的 exit，需透過 project 啟用 |
-| 第三代 | **Enhancement Framework** | 彈性最高，支援 Implicit/Explicit 兩種掛載方式 |
+| 第三代 | **BAdI**（Business Add-In） | 底層是 Interface，支援多個 Implementation 與 Filter 切換，詳見 [[04-Enhancement-2-BAdI]] |
+| 第四代 | **Enhancement Framework** | 彈性最高，支援 Implicit/Explicit 兩種掛載方式，詳見 [[04-Enhancement-3-Enhancement-Framework]] |
 
-現代新開發優先考慮 Enhancement Framework（或 BAdI，詳見下篇）。但接手 MA 案時，舊系統仍大量使用第一、二代，必須都能識別。
+本篇聚焦第一、二代——User Exit 與 Customer Exit，這兩代機制較舊、篇幅也不大，放在同一篇一起說明。現代新開發優先考慮 BAdI 或 Enhancement Framework，但接手 MA 案時，舊系統仍大量使用第一、二代，必須都能識別。
 
 ---
 
@@ -96,45 +100,9 @@ ENDENHANCEMENT.
 
 ---
 
-## 第三代：Enhancement Framework
-
-Enhancement Framework 是 SAP 最新一代的擴充機制，提供兩種掛載方式：
-
-### Implicit Enhancement（隱式擴充）
-
-每個 FORM、Function Module、Method 的開頭與結尾，SAP 自動預留了 Implicit Enhancement Spot。不需要 SAP 預先定義，任何地方都可以掛：
-
-1. 在 SE38 開啟目標程式
-2. 進入 Edit 模式
-3. 選單：**Edit → Enhancement Operations → Show Implicit Enhancement Options**
-4. 畫面上會出現所有可掛載位置（綠色小三角形）
-5. 點擊目標位置 → Create Enhancement → 輸入 Enhancement 名稱
-
-```abap
-ENHANCEMENT 1  Z_CHECK_VENDOR_TAX.
-  " 在標準 FORM 結尾加入稅籍編號格式驗證
-  IF ls_lfa1-stcd1 IS NOT INITIAL.
-    PERFORM validate_tax_id USING ls_lfa1-stcd1.
-  ENDIF.
-ENDENHANCEMENT.
-```
-
-### Explicit Enhancement（顯式擴充）
-
-SAP 在標準程式中預先定義的擴充點（Enhancement Spot），提供有語意的掛載位置：
-
-```abap
-" 標準程式中的 Explicit Enhancement Spot（SAP 定義）
-ENHANCEMENT-POINT my_spot SPOTS es_my_program.
-```
-
-在 SE18 可以查詢現有的 Enhancement Spot，在 SE19 建立 Implementation。
-
----
-
 ## 如何找到正確的擴充點
 
-找到對的擴充點是 Enhancement 中最難的部分：
+這套方法適用於四個世代都通用，找到對的擴充點是 Enhancement 中最難的部分：
 
 **方法一：Debug 追蹤**
 1. 開啟 Developer Mode（SAP Logon → Customizing → Expert Mode）
@@ -159,27 +127,23 @@ SE80 → 選取 Package → 搜尋 "Enhancement Spots"
 
 **陷阱一：啟用後忘記 Activate**
 
-Customer Exit 或 Enhancement 撰寫完成後，必須 Activate（Ctrl+F3）才會生效。忘記 Activate 是最常見的錯誤，症狀是修改後測試完全沒有反應。
+Customer Exit 撰寫完成後，必須 Activate（Ctrl+F3）才會生效。忘記 Activate 是最常見的錯誤，症狀是修改後測試完全沒有反應。
 
 **陷阱二：影響範圍未充分測試**
 
 User Exit 和 Customer Exit 掛在標準流程中，一旦啟用就影響所有使用這個程式的使用者和流程。上線前必須在 QA 環境完整測試，特別是邊界條件（空值、特殊字元、大量資料）。
 
-**陷阱三：多個 Enhancement 的執行順序**
+**陷阱三：Transport 時遺漏 project**
 
-同一個 Enhancement Spot 可以有多個 Implementation，執行順序由系統決定。如果多個 Enhancement 互相依賴，需要特別注意順序控制（可透過 Implementation Priority 設定）。
-
-**陷阱四：Transport 時遺漏 project 或 enhancement**
-
-Customer Exit 的 CMOD project 和 Enhancement Framework 的 Implementation 都需要被正確納入 Transport Request，缺一不可。
+Customer Exit 的 CMOD project 需要被正確納入 Transport Request，遺漏會導致上線後 Customer Exit 沒有生效。
 
 ---
 
-## 顧問建議
+## 實作提醒
 
-- **接手 MA 案先清查現有 exit**：在 CMOD 查看已啟用的 project，在 SE18/SE19 查看已存在的 Enhancement Implementation，避免改到別人已有的邏輯
-- **命名規範**：Enhancement 名稱建議包含業務說明，例如 `Z_VENDOR_TAX_CHECK`，而非 `Z_ENH_001`
-- **新專案優先考慮 BAdI**：Enhancement Framework 的 Implicit Enhancement 雖然靈活，但語意不清。有 BAdI 可用時，優先使用 BAdI（見下篇）
+- **接手 MA 案先清查現有 exit**：在 CMOD 查看已啟用的 project，避免改到別人已有的邏輯
+- **命名規範**：Exit 相關命名建議包含業務說明，而非流水號
+- **新專案優先考慮 BAdI 或 Enhancement Framework**：User Exit 數量有限、Customer Exit 只能有一個實作，語意也不如後兩代清楚，詳見 [[04-Enhancement-2-BAdI|BAdI]] 與 [[04-Enhancement-3-Enhancement-Framework|Enhancement Framework]]
 
 ---
 
@@ -187,3 +151,5 @@ Customer Exit 的 CMOD project 和 Enhancement Framework 的 Implementation 都�
 
 - [[SAP ABAP 開發核心：RICEFW 學習路徑指南]]
 - [[4. Modularization Tech]]
+
+**下一篇**：[[04-Enhancement-2-BAdI]]

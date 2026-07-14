@@ -1,5 +1,5 @@
 ---
-title: SAP 顧問技術筆記
+title: SAP 開發技術筆記
 tags: [index, moc]
 created: 2026-05-12
 status: active
@@ -7,7 +7,7 @@ area: system
 publish: true
 ---
 
-# SAP 顧問技術筆記
+# SAP 開發技術筆記
 
 具備 SAP Business One 導入實務與 ABAP 開發經驗的顧問筆記，涵蓋財務模組、報表開發、技術整合與本地化實作。
 
@@ -36,8 +36,8 @@ publish: true
 
 ### 授權與使用者管理
 
-- [[24-使用者權限管理|核決範本授權者查詢]]
-- [[25-SAP-B1-授權管理|授權管理：機碼查詢、更新與故障排除]]
+- [[24-使用者權限管理|如何設計核准範本]]
+- [[25-SAP-B1-授權管理|SAP License Manager：機碼查詢、更新與故障排除]]
 
 ### 發票與稅務（台灣本地化）
 
@@ -49,19 +49,36 @@ publish: true
 
 ### RICEFW 系列
 
-- [[01-ABAP-Classic-ALV|Classic ALV：從 Field Catalog 到互動報表]]
-- [[02-ABAP-New-Syntax|ABAP New Syntax：寫出更現代的 ABAP]]
-- [[03-ABAP-Smartforms|Smartforms：採購單批次列印與 control_parameter]]
-- [[04-ABAP-Enhancement|Enhancement：在不動標準程式的前提下擴充 SAP 功能]]
-- [[05-ABAP-BAdI|BAdI：業務邏輯擴充的現代解法]]
-- [[06-ABAP-RFC-BAPI|RFC 與 BAPI：SAP 對外通訊的標準介面]]
+- [[01-Classic-ALV-1-基礎與版面設定|Classic ALV 第1篇：基礎與版面設定]]
+- [[01-Classic-ALV-2-互動與跳轉|Classic ALV 第2篇：互動與跳轉]]
+- [[01-Classic-ALV-3-可編輯ALV與資料回寫|Classic ALV 第3篇：可編輯 ALV 與資料回寫]]
+- [[02-New-Syntax-1-資料宣告與迴圈|New Syntax 第1篇：資料宣告與迴圈]]
+- [[02-New-Syntax-2-條件與表格建構表達式|New Syntax 第2篇：條件與表格建構表達式]]
+- [[02-New-Syntax-3-進階表格與物件操作|New Syntax 第3篇：進階表格與物件操作]]
+- [[03-Smartforms|Smartforms：採購單批次列印與 control_parameter]]
+- [[04-Enhancement-1-總覽與傳統擴充機制|Enhancement 總覽與傳統擴充機制：User Exit 與 Customer Exit]]
+- [[04-Enhancement-2-BAdI|BAdI：業務邏輯擴充的現代解法]]
+- [[04-Enhancement-3-Enhancement-Framework|Enhancement Framework：Implicit 與 Explicit 擴充]]
+- [[04-Enhancement-4-實戰演練與除錯技巧|Enhancement 實戰演練與除錯技巧]]
+- [[07-Custom-BAPI|自訂 BAPI 開發：從建表到 Release]]
+
+### OO ABAP 系列
+
+- [[08-OO-ABAP-1-核心邏輯鏈|OO ABAP 核心邏輯鏈]]
+- [[08-OO-ABAP-2-命名規則|OO ABAP 命名規則]]
+- [[08-OO-ABAP-3-SOLID原則|SOLID 原則]]
+- [[08-OO-ABAP-4-Factory與Singleton|設計模式：Factory + Singleton]]
+- [[08-OO-ABAP-5-Strategy與Observer|設計模式：Strategy + Observer]]
+- [[08-OO-ABAP-6-TemplateMethod與Facade|設計模式：Template Method + Facade]]
+- [[08-OO-ABAP-7-BAdI案例|SAP BAdI：用 Template Method 重新理解]]
+- [[08-OO-ABAP-8-BAPI案例|SAP BAPI：用 Facade Pattern 重新理解]]
 
 ### 工具與搜尋技巧
 
-- [[ABAP-BAdI搜尋方法|SAP BAdI 搜尋方法]]
-- [[ABAP-BAPI搜尋方法|SAP BAPI 搜尋方法]]
+- [[Find-BAdI|Find BAdI]]
+- [[Find-BAPI|Find BAPI]]
 - [[SAP-GUI-CheatSheet|SAP GUI Cheat Sheet]]
-- [[ABAP-Editor-SE38-CheatSheet|ABAP Editor（SE38）Cheat Sheet]]
+- [[Editor-SE38-CheatSheet|ABAP Editor（SE38）Cheat Sheet]]
 
 ---
 

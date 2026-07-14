@@ -1,4 +1,5 @@
 ---
+title: "SAP RAP Action 開發實戰筆記：兩層式架構"
 tags:
   - abap
   - rap
@@ -10,6 +11,12 @@ publish: true
 ---
 
 # SAP RAP Action 開發實戰筆記：兩層式架構
+
+## 為什麼需要 Action
+
+在 RAP 的 Managed Scenario 中，標準的 Create/Update/Delete 無法表達「這個按鈕要做什麼」這類自訂業務行為（例如核准、狀態轉換）。Action 就是用來承載這種「非標準 CRUD」邏輯的機制——但因為橫跨 UI、行為定義、投影層、實作四個層次，任何一層漏做都可能導致 Preview Dump，這也是本篇要按「五部曲」順序整理的原因。
+
+---
 
 ## 1. 概覽 (Overview)
 在 SAP RAP 的兩層式架構（Managed Scenario）中，Action 的開發需遵循從 **UI 定義** 到 **底層宣告**，再到 **投影層暴露**，最後 **後端實作** 的順序。
