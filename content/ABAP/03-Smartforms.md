@@ -1,15 +1,22 @@
 ---
+title: "Smartforms：採購單批次列印與 control_parameter"
 tags:
   - SAP
   - ABAP
   - Smartforms
 created: 2026-05-15
-status: draft
+status: active
 area: resources
-publish: false
+publish: true
 ---
 
 # Smartforms：採購單批次列印與 control_parameter
+
+## 為什麼需要控制列印行為
+
+單次列印一份文件時，SmartForms 的預設行為已經足夠。但實務上常需要一次列印上百份採購單——若不特別處理，每份文件都會各自產生一個獨立 Spool Job，使用者得在列印佇列裡逐一放行，管理起來非常痛苦。這篇筆記整理的重點，就是如何透過 `control_parameter` 讓整批文件合併成單一 Spool Job，並避開其中的資料準備陷阱。
+
+---
 
 ## SmartForms 的兩層架構
 

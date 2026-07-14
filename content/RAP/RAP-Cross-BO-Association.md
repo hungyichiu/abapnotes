@@ -1,4 +1,5 @@
 ---
+title: "RAP 跨業務物件關聯 (Cross-BO Associations)"
 tags:
   - abap
   - rap
@@ -10,6 +11,12 @@ publish: true
 ---
 
 # RAP 跨業務物件關聯 (Cross-BO Associations)
+
+## 為什麼要分清楚關聯的解析方向
+
+跨 BO 關聯要能運作，系統必須先確定「外鍵到底存在哪一邊」——搞錯來源解析或目標解析的方向，會直接影響 Create-by-Association 時該由哪個實體回填外鍵，嚴重時甚至導致關聯建立失敗。這篇整理的就是這組定義規則，以及兩種解析方向在實作上的差異。
+
+---
 
 ## 1. 核心概念 (Core Concepts)
 跨業務物件關聯是指連接兩個隸屬於**不同業務物件（Business Objects, BOs）**實體的關聯。其運作方式模擬了 BO 內部的組成關聯（Compositional Associations）。

@@ -1,4 +1,5 @@
 ---
+title: "RFC 與 BAPI：SAP 對外通訊的標準介面"
 tags:
   - SAP
   - ABAP
@@ -11,6 +12,10 @@ publish: false
 ---
 
 # RFC 與 BAPI：SAP 對外通訊的標準介面
+
+## 為什麼不能讓外部系統直接存取 SAP 資料表
+
+SAP 系統與外部系統整合時，不能讓對方直接讀寫底層資料表（如 `VBAK`、`EKKO`）——沒有商業邏輯檢查、沒有版控相容性保證，SAP 版本升級或欄位異動很容易讓外部程式全部壞掉。RFC 與 BAPI 就是官方提供的「穩定對外窗口」：外部系統只透過這組經過封裝、測試過的介面溝通，底層資料結構怎麼變動都不影響呼叫端。
 
 ## RFC 與 BAPI 的關係
 
@@ -283,7 +288,7 @@ RFC Function Module 的所有參數必須是 Pass by Value，使用 Reference（
 
 ---
 
-## 顧問建議
+## 實作提醒
 
 - **先用 BAPI_TRANSACTION 測試**：在 SE37 直接測試 BAPI，確認參數和回傳值格式，再寫程式
 - **RETURN table 的訊息要顯示給使用者**：不要靜默丟棄，至少 LOG 下來或顯示在畫面上，方便 trace 問題

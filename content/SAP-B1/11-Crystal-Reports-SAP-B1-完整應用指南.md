@@ -1,4 +1,5 @@
 ---
+title: "Crystal Reports 在 SAP B1 中的完整應用指南"
 tags:
   - SAP
   - B1
@@ -137,7 +138,7 @@ if IsNull({field}) then "0" else ToText({field}, 0, "")
 
 ---
 
-## 顧問建議
+## 實作提醒
 
 Crystal Reports 的學習曲線比多數人預期的短，但要做出「客戶覺得好用」的報表，需要同時具備三種能力：
 
