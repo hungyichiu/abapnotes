@@ -62,6 +62,12 @@ publish: true
 
 ## ABAP 開發
 
+### 預備知識
+
+- [[00-SAP-ABAP基礎概念|SAP 與 ABAP 基礎概念速記]]
+- [[00-SAP開發環境速記|SAP 開發環境速記：Client、命名規則、T-Code、工具]]
+- [[00-SAP-AS-ABAP架構組件總覽|SAP AS ABAP 架構組件速記]]
+
 ### RICEFW 系列
 
 - [[01-Classic-ALV-1-基礎與版面設定|Classic ALV 第1篇：基礎與版面設定]]
