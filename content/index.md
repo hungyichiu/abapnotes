@@ -56,7 +56,7 @@ publish: true
 - [[S4HANA-PP模組開發注意事項-1-基礎資料與BOM|PP 模組 第1篇：基礎資料與 BOM 結構]]
 - [[S4HANA-PP模組開發注意事項-2-製程路徑與工作中心|PP 模組 第2篇：製程路徑與工作中心]]
 - [[S4HANA-PP模組開發注意事項-3-生產訂單執行|PP 模組 第3篇：生產訂單執行]]
-- [[S4HANA-SD-MM-PP-差異速查表|B1 vs S/4HANA：SD/MM/PP 資料表差異速查表]]
+- [[S4HANA-SD-MM-PP-差異速查表|B1 vs S／4HANA：SD／MM／PP 資料表差異速查表]]
 
 ---
 
