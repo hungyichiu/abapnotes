@@ -1,11 +1,109 @@
 @use "./base.scss";
 
-// Base font size increase
+// ---------------------------------------------------------------
+// 字級與行高：中文內文行高要比拉丁文高，1.8 左右讀起來才不擠
+// ---------------------------------------------------------------
 html {
-  font-size: 18px;
+  font-size: 17px;
 }
 
-// Eclipse ADT-style code blocks
+body {
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+
+article p,
+article li {
+  line-height: 1.85;
+}
+
+article li {
+  margin: 0.2rem 0;
+}
+
+// ---------------------------------------------------------------
+// 標題：Noto Serif TC 粗體，當成版面上的主角；表格表頭維持無襯線
+// ---------------------------------------------------------------
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+}
+
+h1.article-title {
+  font-size: 2.1rem;
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+h2 {
+  font-size: 1.45rem;
+  margin-top: 2.4rem;
+}
+
+h3 {
+  font-size: 1.15rem;
+  margin-top: 1.8rem;
+}
+
+thead {
+  font-family: var(--bodyFont);
+  font-weight: 700;
+}
+
+// 左欄網站名稱：縮小到一行放得下
+.page-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+
+// ---------------------------------------------------------------
+// 連結：內文連結改成底線，不用藍底藥丸；tag 保留小標籤樣式
+// ---------------------------------------------------------------
+article a.internal:not(.tag-link),
+.backlinks a.internal,
+.prevnext a.internal {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  line-height: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, var(--secondary) 40%, transparent);
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    text-decoration-color: var(--tertiary);
+  }
+}
+
+article a.external {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, var(--secondary) 40%, transparent);
+  text-underline-offset: 0.2em;
+}
+
+.tags .tag-link {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.content-meta {
+  font-size: 0.9rem;
+}
+
+// ---------------------------------------------------------------
+// 程式碼：Eclipse ADT 風格的淺色區塊，深色模式用 VS Code dark
+// ---------------------------------------------------------------
 .shiki {
   border-radius: 4px;
   padding: 1em;
@@ -14,25 +112,36 @@ html {
   border: 1px solid var(--lightgray);
 }
 
-// Light mode: Eclipse-like white background
 .shiki.light-plus {
   background-color: #ffffff !important;
 }
 
-// Dark mode: VS Code dark
 :root[saved-theme="dark"] .shiki.dark-plus {
   background-color: #1e1e1e !important;
 }
 
-// Inline code styling
 :not(pre) > code {
-  background-color: #dde6f5;
+  background-color: var(--lightgray);
   padding: 0.15em 0.35em;
   border-radius: 3px;
   font-size: 0.85em;
 }
 
-:root[saved-theme="dark"] :not(pre) > code {
-  background-color: #1e2d4d;
+// ---------------------------------------------------------------
+// 品質底線：鍵盤焦點看得到、尊重減少動態設定
+// ---------------------------------------------------------------
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 2px;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

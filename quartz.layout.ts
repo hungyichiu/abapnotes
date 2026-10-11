@@ -7,7 +7,13 @@ export const sharedPageComponents: SharedLayout = {
   header: [],
   afterBody: [
     Component.PrevNext(),
-    Component.Comments({
+    // 留言區只放在文章頁，首頁、標籤頁、資料夾頁不放
+    Component.ConditionalRender({
+      condition: (page) =>
+        page.fileData.slug !== "index" &&
+        !page.fileData.slug!.startsWith("tags/") &&
+        !page.fileData.slug!.endsWith("/index"),
+      component: Component.Comments({
       provider: "giscus",
       options: {
         repo: "hungyichiu/abapnotes",
@@ -20,6 +26,7 @@ export const sharedPageComponents: SharedLayout = {
         inputPosition: "bottom",
         lang: "zh-TW",
       },
+    }),
     }),
   ],
   footer: Component.Footer({
@@ -37,8 +44,14 @@ export const defaultContentPageLayout: PageLayout = {
       condition: (page) => page.fileData.slug !== "index",
     }),
     Component.ArticleTitle(),
-    Component.ContentMeta(),
-    Component.TagList(),
+    Component.ConditionalRender({
+      component: Component.ContentMeta(),
+      condition: (page) => page.fileData.slug !== "index",
+    }),
+    Component.ConditionalRender({
+      component: Component.TagList(),
+      condition: (page) => page.fileData.slug !== "index",
+    }),
   ],
   left: [
     Component.PageTitle(),
@@ -54,7 +67,16 @@ export const defaultContentPageLayout: PageLayout = {
       ],
     }),
     Component.Explorer({
-      filterFn: (node) => node.slugSegment !== "assets",
+      filterFn: (node) => node.slugSegment !== "assets" && node.slugSegment !== "tags",
+      // 資料夾顯示名稱來自各資料夾 index.md 的 title，不用在這裡對照
+      // 依檔名排序（01-、02- 的系列編號），不用標題排，系列文章才會排在一起
+      sortFn: (a, b) => {
+        if (a.isFolder !== b.isFolder) return a.isFolder ? -1 : 1
+        return a.slugSegment.localeCompare(b.slugSegment, undefined, {
+          numeric: true,
+          sensitivity: "base",
+        })
+      },
     }),
   ],
   right: [
@@ -80,7 +102,16 @@ export const defaultListPageLayout: PageLayout = {
       ],
     }),
     Component.Explorer({
-      filterFn: (node) => node.slugSegment !== "assets",
+      filterFn: (node) => node.slugSegment !== "assets" && node.slugSegment !== "tags",
+      // 資料夾顯示名稱來自各資料夾 index.md 的 title，不用在這裡對照
+      // 依檔名排序（01-、02- 的系列編號），不用標題排，系列文章才會排在一起
+      sortFn: (a, b) => {
+        if (a.isFolder !== b.isFolder) return a.isFolder ? -1 : 1
+        return a.slugSegment.localeCompare(b.slugSegment, undefined, {
+          numeric: true,
+          sensitivity: "base",
+        })
+      },
     }),
   ],
   right: [],

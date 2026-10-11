@@ -1,15 +1,15 @@
 ---
-title: "從 B1 到 S/4HANA：採購模組裡最容易被忽略的一張表"
+title: 從 B1 到 S/4HANA：採購模組裡最容易被忽略的一張表
 tags:
   - SAP
   - S4HANA
   - MM
 created: 2026-07-16
 status: active
-area: resources
+area: public
 publish: true
-source: "[[SAP MM Tables]]"
-description: "拆解 S/4HANA MM 模組的採購資料表與 EKBE 歷史追蹤表判讀邏輯（VGABE/SHKZG/BWART），對照 B1 採購單據鏈的差異，掌握開發時的關聯 Key 與效能注意事項。"
+source: "[[S4H-MM-Tables]]"
+description: 拆解 S/4HANA MM 模組的採購資料表與 EKBE 歷史追蹤表判讀邏輯（VGABE/SHKZG/BWART），對照 B1 採購單據鏈的差異，掌握開發時的關聯 Key 與效能注意事項。
 keywords:
   - S/4HANA MM 模組
   - EKBE 歷史追蹤表
@@ -17,8 +17,6 @@ keywords:
   - EKKO EKPO
   - SAP B1 採購單
 ---
-
-# 從 B1 到 S/4HANA：採購模組裡最容易被忽略的一張表
 
 ## 前言
 

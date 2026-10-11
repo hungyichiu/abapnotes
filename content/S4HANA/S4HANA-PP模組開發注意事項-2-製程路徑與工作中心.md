@@ -1,15 +1,15 @@
 ---
-title: "從 B1 到 S/4HANA：製程路徑，B1 完全沒概念的一塊拼圖"
+title: 從 B1 到 S/4HANA：製程路徑，B1 完全沒概念的一塊拼圖
 tags:
   - SAP
   - S4HANA
   - PP
 created: 2026-07-16
 status: active
-area: resources
+area: public
 publish: true
-source: "[[SAP PP Tables]]"
-description: "說明 S/4HANA 製程路徑（Routing）與工作中心的資料表結構（PLKO/PLPO/PLMZ、CRHD），對照 BOM 的分工與 B1 完全沒有的產能排程概念。"
+source: "[[S4H-PP-Tables]]"
+description: 說明 S/4HANA 製程路徑（Routing）與工作中心的資料表結構（PLKO/PLPO/PLMZ、CRHD），對照 BOM 的分工與 B1 完全沒有的產能排程概念。
 keywords:
   - S/4HANA 製程路徑
   - Routing PLKO PLPO
@@ -17,8 +17,6 @@ keywords:
   - PLMZ 組件分配
   - 標準工時成本
 ---
-
-# 從 B1 到 S/4HANA：製程路徑，B1 完全沒概念的一塊拼圖
 
 ## 前言
 

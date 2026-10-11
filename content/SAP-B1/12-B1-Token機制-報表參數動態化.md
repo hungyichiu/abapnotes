@@ -5,12 +5,14 @@ tags:
   - B1
   - Crystal_Reports
 created: 2026-03-17
-status: completed
-area: resources
+status: active
+area: public
 publish: true
+source:
+  - "[[CR-Syntax and Rules for Defining Tokens]]"
+  - "[[CR-Tokens for Creating SAP Business One Controls]]"
+  - "[[CR-@beginDate = MIN(F_RefDate), @endDate = MAX(T_RefDate)]]"
 ---
-
-# B1 Token 機制：讓報表參數動態化
 
 ## 前言
 
@@ -122,7 +124,7 @@ CARDTO@FROM OCRD WHERE cardType='c'
 {OINV.CardCode} >= {?CARDFROM} AND {OINV.CardCode} <= {?CARDTO}
 ```
 
-![[bp_criteria.png]]
+![[bp_criteria.webp]]
 
 實務中常用「起始值到結束值」的 Between 設計，讓使用者可以選擇單一客戶（起始=結束）或客戶範圍。
 
@@ -136,7 +138,7 @@ DAYTO@
 -- SQL WHERE：
 {OINV.DocDate} >= {?DAYFROM} AND {OINV.DocDate} <= {?DAYTO}
 ```
-![[date_pick_free.png]]
+![[date_pick_free.webp]]
 
 日期範圍是最常見的篩選需求，幾乎所有業務報表都會用到。
 
@@ -197,11 +199,3 @@ WhsCode@SELECT * FROM OWHS
 Token 機制是一個「看起來簡單、用起來有細節」的功能。建議在每個新專案中，建立一份常用 Token 的參考清單，包含參數名稱、SQL 語法、對應的 B1 介面類型，這樣在設計新報表時可以直接套用，減少每次都要查文件的時間。
 
 更進階的應用是讓 Token 互相依賴，例如先選國家、再根據國家篩選州別，這需要在第二個 Token 的 SQL 中引用第一個 Token 的值（`WHERE Country = '@Country'`）。這種做法能大幅提升報表的使用便利性，非常適合用在地區業務分析等場景。
-
----
-
-## 來源筆記
-
-- [[Syntax and Rules for Defining Tokens]]
-- [[Tokens for Creating SAP Business One Controls]]
-- [[@beginDate = MIN(F_RefDate), @endDate = MAX(T_RefDate)]]

@@ -226,9 +226,13 @@ async function setupExplorer(currentSlug: FullSlug) {
       explorerUl.scrollTop = parseInt(scrollTop)
     } else {
       // try to scroll to the active element if it exists
-      const activeElement = explorerUl.querySelector(".active")
+      const activeElement = explorerUl.querySelector(".active") as HTMLElement | null
       if (activeElement) {
-        activeElement.scrollIntoView({ behavior: "smooth" })
+        // 只捲 Explorer 自己的清單，不用 scrollIntoView：它會連整個視窗一起捲，
+        // 桌面版打開文章時標題會被捲出畫面
+        const listTop = explorerUl.getBoundingClientRect().top
+        const itemTop = activeElement.getBoundingClientRect().top
+        explorerUl.scrollTop += itemTop - listTop - explorerUl.clientHeight / 3
       }
     }
 

@@ -8,7 +8,7 @@ tags:
   - PP
 created: 2026-07-16
 status: active
-area: resources
+area: public
 publish: true
 source: "[[SAP SD Tables]], [[SAP MM Tables]], [[SAP PP Tables]]"
 description: "一張速查表對照 B1 與 S/4HANA 在 SD/MM/PP 三個模組的資料表差異（VBEP、EKBE、製程路徑），快速找到該查哪張表。"
@@ -18,8 +18,6 @@ keywords:
   - VBEP EKBE 製程路徑
   - SAP 資料表速查
 ---
-
-# B1 vs S/4HANA：SD/MM/PP 資料表差異速查表
 
 ## 前言
 

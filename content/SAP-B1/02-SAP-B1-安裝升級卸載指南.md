@@ -1,25 +1,30 @@
 ---
-title: "SAP B1 安裝、升級與完整卸載指南"
+title: "SAP B1 安裝前檢查、升級與完整卸載指南"
 tags:
   - SAP
   - B1
 created: 2026-03-03
-status: completed
-area: resources
+status: active
+area: public
 publish: true
+source:
+  - "[[B1-安裝-安裝TIPS]]"
+  - "[[B1-安裝-安裝項目]]"
+  - "[[B1-安裝-如何完整移除SAP B1 和 SQL Server]]"
+  - "[[B1-full-uninstall]]"
+  - "[[B1-使用第三方應用移除B1 安裝元件]]"
+  - "[[B1-安裝-版本支援規格查詢]]"
 ---
 
-# SAP B1 安裝、升級與完整卸載指南
+## 【So What】安裝不乾淨，問題會留到下一次
 
-## 前言
+SLD 無法連線、DI API 報錯、升級後 Client 端打不開，很多時候根本原因是前一次安裝或卸載留下的殘留：`SBO-COMMON`、`SLDData` 沒刪、登錄檔還在、服務沒清。
 
-SAP Business One 的安裝與維護，是每位顧問在實作初期就必須掌握的核心能力。一個安裝不乾淨的環境，往往是日後各種奇怪問題的根源——從 SLD 無法連線、DI API 報錯，到升級後 Client 端無法啟動，很多時候根本原因都是前一次安裝或卸載留下的殘留元件。
-
-本文的重點不只是「如何操作」，而是讓你理解每個步驟背後的邏輯：為什麼要這樣備份、為什麼卸載順序很重要、為什麼某些資料庫必須手動刪除。理解這些，才能在出問題時快速判斷根因。
+這篇整理三件事：安裝前要查什麼、升級前要備份什麼、卸載要清到哪裡。每一步都說為什麼，出問題時才判斷得出根因。
 
 ---
 
-## 一、安裝前環境檢查
+## 【What】一、安裝前環境檢查
 
 安裝前的環境確認，決定了後續安裝是否順暢。跳過這個步驟，往往要在安裝到一半時才發現問題，代價更高。
 
@@ -50,32 +55,56 @@ SAP B1 的版本與作業系統、SQL Server 版本之間有嚴格的相容性�
 |----------|-----------|----------|
 | 部署環境 | Windows Server | Linux（SUSE 為主） |
 | 管理工具 | SSMS（SQL Server Management Studio） | HANA Studio / Web IDE |
-| 授權 | SAP B1 授權 + SQL Server 授權 | SAP B1 授權 + HANA 授權（需在一個月內更換） |
+| 授權 | SAP B1 授權 + SQL Server 授權 | SAP B1 授權 + HANA 授權（臨時授權有期限，要換正式的） |
 | 適合規模 | 中小型企業，顧問生態較成熟 | 有大量即時分析需求的企業 |
 | 台灣市場現況 | 主流選擇 | 需搭配 Linux 維運能力 |
 
-**HANA 版特別注意**：HANA 資料庫授權有時效性，安裝後必須在指定期限內（通常一個月）重新掛載正式授權，否則資料庫會鎖定。重新掛載需要在 Linux 主機透過指令操作。
+**HANA 版特別注意**：HANA 資料庫裝好時是臨時授權，期限通常是 90 天（以 SAP 核發通知為準），到期前要掛上正式授權，否則資料庫會鎖定。掛載要在 Linux 主機透過指令操作。
 
 ---
 
-## 三、升級備份策略
+## 安裝順序
 
-升級是所有維護作業中風險最高的一環。一個完整的備份策略是最重要的安全網。
+新環境從零開始裝，順序是這樣，順序錯了 SLD 會連不到資料庫：
+
+1. 先裝好 SQL Server（或 HANA），確認 `sa` 可以登入、混合驗證模式有開。
+2. 在伺服器執行 B1 安裝光碟的 Setup Wizard，選 **Server**，裝 Server Tools：SLD、License Service、Service Layer 這些都在裡面。
+	- 過程中會要你設 Site User（`B1SiteUser`）密碼，記下來，之後進 SLD 和授權管理都要用。
+3. Setup Wizard 接著建 `SBO-COMMON` 和示範公司資料庫，並在 SLD 註冊這台資料庫伺服器。
+4. 最後在 Client 電腦裝 Client，或從伺服器的共用資料夾 `B1_SHR` 安裝。
+	- 要寫 Add-on 或用 DTW 的機器，再用 Components Wizard 補裝 DI API。
+
+裝完先用示範公司登入一次，確認 SLD、授權、Client 三者都通，再匯客戶資料。
+
+---
+
+## 【What For】三、升級備份策略
+
+升級是所有維護作業中風險最高的一環，備份要做足。
 
 ### 升級前必做備份
 
-1. **完整備份所有公司資料庫（Company DB）**：包含所有客戶的生產資料庫。
-2. **備份 SBO-COMMON 資料庫**：這個資料庫存放授權、使用者、公司清單等系統設定，遺失後無法從應用程式層重建。
-3. **備份 SLD 資料庫（SLDModel.SLDData）**：存放所有資料庫連線設定，升級後若連線設定異常，可用此備份還原。
-4. **記錄當前版本號**：升級失敗時需要知道要回滾到哪個版本。
-5. **備份客製化設定**：包含 Crystal Report 範本、PLD 版面、附件資料夾內容。
+1. **完整備份所有公司資料庫（Company DB）**。
+2. **備份 `SBO-COMMON`**。
+	- 這個資料庫存放授權、使用者、公司清單等系統設定，遺失後無法從應用程式層重建。
+	- 升級失敗要退回舊版時，`SBO-COMMON` 已經被新版改過，沒有備份就全部公司連不上。
+3. **備份 SLD 資料庫（`SLDData`）**。
+	- 存放所有資料庫連線設定，升級後若連線異常可以還原。
+4. **記錄當前版本號**。
+	- 升級失敗時要知道退回哪個版本。
+5. **備份客製化設定**。
+	- Crystal Report 範本、PLD 版面、附件資料夾內容。
 
 ### 升級作業流程
 
-1. 在測試環境先行驗證升級流程（永遠不要第一刀在正式環境）。
+1. 在測試環境先行驗證升級流程，永遠不要第一刀在正式環境。
+	- 測試機規格跟正式環境一樣，用正式環境的資料庫備份當測試資料。
+	- 這樣才能提前發現 B1UP、DI API 這些客製化和新版本的相容問題。
 2. 關閉所有使用者連線。
-3. 使用 SAP 提供的 **Component Wizard** 執行升級，不要手動替換 DLL 檔案。
-4. 升級完成後，需同步升級所有 Client 端的安裝。
+3. 用 B1 安裝光碟的 **Setup Wizard** 選 Upgrade 執行升級（9.x 叫 Upgrade Wizard），不要手動替換 DLL 檔案。
+	- Components Wizard 是裝、移除單機元件（Client、DI API）用的，不是升級工具。
+4. 升級完成後，Client 端登入時會偵測到版本不一致並自動升級。
+	- 自動升級失敗（通常是權限或共用資料夾 `B1_SHR` 連不到）才需要手動重裝 Client。
 5. 驗證關鍵功能：登入、主要交易文件的新增、報表執行。
 
 ---
@@ -86,13 +115,19 @@ SAP B1 的版本與作業系統、SQL Server 版本之間有嚴格的相容性�
 
 ### 標準卸載流程
 
-**Step 1：使用 Component Wizard 執行 Uninstall**
-這是 SAP 官方的卸載入口，會處理大部分的應用程式元件。路徑通常位於安裝目錄下的 `Packages.x64` 資料夾。
-![[SAP Business one 安裝項目.png|800]]
-**Step 2：從「已安裝的應用程式」逐一移除殘留**
-Component Wizard 完成後，進入控制台的「應用程式與功能」，移除所有仍顯示為已安裝的 SAP Business One 相關項目。
+**Step 1：用 Setup Wizard 或 Components Wizard 執行 Uninstall**
 
-以下兩個元件**例外，不要移除**：
+這是 SAP 官方的卸載入口，會處理大部分的應用程式元件。伺服器端用安裝光碟的 Setup Wizard 選 Uninstall；單機元件用安裝目錄下 `Packages.x64` 資料夾裡的 Components Wizard。
+
+![[SAP Business one 安裝項目.webp|800]]
+
+安裝光碟的 `Packages.x64` 底下就是各元件的安裝包。
+
+**Step 2：從「已安裝的應用程式」逐一移除殘留**
+
+Wizard 跑完後，進入控制台的「應用程式與功能」，移除所有仍顯示為已安裝的 SAP Business One 相關項目。
+
+以下兩個元件**例外，不要移除**，它們常被別的軟體共用，移掉可能害到其他程式，新版安裝時會自己處理：
 - Remote Support Platform for SAP Business One
 - SAP Crystal Reports Runtime
 
@@ -100,16 +135,17 @@ Component Wizard 完成後，進入控制台的「應用程式與功能」，移
 
 在 SSMS 中，手動刪除以下資料庫：
 - **SBO-COMMON**：B1 的共用系統資料庫，存放所有公司的基本設定。
-- **SLDModel.SLDData**：SLD（System Landscape Directory）的資料庫，存放所有公司的 DB 連線資訊。
+- **SLDData**：SLD（System Landscape Directory）的資料庫，存放所有公司的 DB 連線資訊。
 
-> 這兩個資料庫不會被 Component Wizard 自動刪除，必須手動處理。如果只移除應用程式卻留下這兩個資料庫，下次重新安裝時會發生衝突。
+這兩個資料庫 Wizard 不會自動刪，必須手動處理。只移除應用程式卻留下它們，下次重裝時 SLD 的初始化會因為舊資料庫已存在而失敗。
 
 **Step 4：刪除 SAP 相關資料夾**
 
-> [!info]
-> C:\Program Files\SAP\
-> C:\Program Files (x86)\SAP\
-> C:\ProgramData\SAP\
+```
+C:\Program Files\SAP\
+C:\Program Files (x86)\SAP\
+C:\ProgramData\SAP\
+```
 
 **Step 5：清理 Windows 服務**
 
@@ -121,7 +157,7 @@ sc delete "服務名稱"
 
 **Step 6：清理暫存資料夾並重新啟動**
 
-清空 `%temp%`，重新啟動系統，再進行新版本的安裝。
+清空 `%temp%`，重新啟動系統，再進行新版本的安裝。重啟不能省，有些服務的刪除要重啟才生效，跳過的話新版安裝時會出現莫名其妙的權限衝突。
 
 ---
 
@@ -133,38 +169,14 @@ sc delete "服務名稱"
 |------|------|----------|
 | Revo Uninstaller | 免費版可強制移除殘留登錄檔 | 首選，最適合清除卡住的 SAP 元件 |
 | Geek Uninstaller | 免安裝綠色工具，輕巧快速 | 需要即點即用的情境 |
-| IObit Uninstaller | 介面友善，有免費版 | 新手適用，注意安裝時略過推廣軟體 |
+| IObit Uninstaller | 介面友善，有免費版 | 新手適用 |
+
+IObit 安裝時注意略過推廣軟體。
 
 使用 Revo Uninstaller 時，搜尋「SAP Business One」可以找出所有殘留項目，包括控制台中看不到的元件，一次清除。
 
 ---
 
-## 常見陷阱
+## 相關閱讀
 
-**陷阱一：升級前沒有備份 SBO-COMMON**
-升級失敗後，如果 SBO-COMMON 已被新版本修改，降回舊版本時會發現資料庫結構不相容，所有公司連線全部失效。SBO-COMMON 的備份是升級前最不能省略的一步。
-
-**陷阱二：卸載時保留了 SLDModel.SLDData**
-重新安裝後，SLD 的初始化流程會因為舊資料庫已存在而失敗或出現衝突，導致新安裝的 SLD 無法正常啟動。
-
-**陷阱三：Client 端版本沒有同步升級**
-SAP B1 的 Server 版本與 Client 版本必須一致。升級 Server 後，所有 Client 端都需要重新安裝對應版本，否則登入時會出現版本不相符的錯誤。
-
----
-
-## 實作提醒
-
-每次完整卸載後，重新啟動系統是一個不應省略的步驟，Windows 有些服務的刪除需要重啟才會生效，跳過這個步驟可能導致新版本安裝時出現莫名其妙的權限衝突。
-
-升級前的測試，建議在與正式環境相同規格的測試機上進行，並使用正式環境的資料庫備份作為測試資料。這樣才能提前發現客製化開發（B1UP、DI API）與新版本之間的相容性問題，不要把這些問題留到正式升級當天才發現。
-
----
-
-## 來源筆記
-
-- [[SAP B1 安裝TIPS]]
-- [[SAP Business one 安裝項目]]
-- [[如何完整移除SAP B1 和 SQL Server]]
-- [[SAP-B1-full-uninstall]]
-- [[使用第三方應用移除B1 安裝元件]]
-- [[SAP B1 版本支援規格查詢]]
+- [[25-SAP-B1-授權管理]]：裝好之後的授權申請與更新

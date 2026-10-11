@@ -1,15 +1,15 @@
 ---
-title: "從 B1 到 S/4HANA：SD 模組開發前必須搞懂的資料表邏輯"
+title: 從 B1 到 S/4HANA：SD 模組開發前必須搞懂的資料表邏輯
 tags:
   - SAP
   - S4HANA
   - SD
 created: 2026-07-16
 status: active
-area: resources
+area: public
 publish: true
-source: "[[SAP SD Tables]]"
-description: "整理 S/4HANA SD 模組資料表（VBAK/VBAP/VBEP、VBFA）與開發注意事項，對照 B1 銷售流程的資料表差異，快速掌握排程列與單據流追蹤邏輯。"
+source: "[[S4H-SD-Tables]]"
+description: 整理 S/4HANA SD 模組資料表（VBAK/VBAP/VBEP、VBFA）與開發注意事項，對照 B1 銷售流程的資料表差異，快速掌握排程列與單據流追蹤邏輯。
 keywords:
   - S/4HANA SD 模組
   - VBEP 排程列
@@ -17,8 +17,6 @@ keywords:
   - VBAK VBAP
   - SAP B1 ORDR RDR1
 ---
-
-# 從 B1 到 S/4HANA：SD 模組開發前必須搞懂的資料表邏輯
 
 ## 前言
 

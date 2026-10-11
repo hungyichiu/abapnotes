@@ -3,11 +3,10 @@ title: SAP 開發技術筆記
 tags: [index, moc]
 created: 2026-05-12
 status: active
-area: system
+area: public
 publish: true
+pin: true
 ---
-
-# SAP 開發技術筆記
 
 具備 SAP Business One 導入實務與 ABAP 開發經驗的顧問筆記，涵蓋財務模組、報表開發、技術整合與本地化實作。
 
@@ -19,7 +18,7 @@ publish: true
 
 ### 系統架構與導入
 
-- [[02-SAP-B1-安裝升級卸載指南|安裝、升級與完整卸載指南]]
+- [[02-SAP-B1-安裝升級卸載指南|安裝前檢查、升級與完整卸載指南]]
 - [[03-DTW-主檔匯入最佳實踐|DTW 資料傳輸工作台：主檔匯入最佳實踐]]
 
 ### 報表開發
@@ -36,8 +35,8 @@ publish: true
 
 ### 授權與使用者管理
 
-- [[24-如何設計核准範本]]
-- [[25-SAP-B1-授權管理|SAP License Manager：機碼查詢、更新與故障排除]]
+- [[24-如何設計核准範本|核准範本盤點：用 SQL 查出每個核准階段由誰負責]]
+- [[25-SAP-B1-授權管理|授權管理：識別碼查詢、更新流程與故障排除]]
 
 ### 發票與稅務（台灣本地化）
 
@@ -76,12 +75,18 @@ publish: true
 - [[02-New-Syntax-1-資料宣告與迴圈|New Syntax 第1篇：資料宣告與迴圈]]
 - [[02-New-Syntax-2-條件與表格建構表達式|New Syntax 第2篇：條件與表格建構表達式]]
 - [[02-New-Syntax-3-進階表格與物件操作|New Syntax 第3篇：進階表格與物件操作]]
-- [[03-Smartforms|Smartforms：採購單批次列印與 control_parameter]]
+- [[03-Smartforms|Smart Forms：採購單批次列印與 control_parameters]]
 - [[04-Enhancement-1-總覽與傳統擴充機制|Enhancement 總覽與傳統擴充機制：User Exit 與 Customer Exit]]
 - [[04-Enhancement-2-BAdI|BAdI：業務邏輯擴充的現代解法]]
 - [[04-Enhancement-3-Enhancement-Framework|Enhancement Framework：Implicit 與 Explicit 擴充]]
 - [[04-Enhancement-4-實戰演練與除錯技巧|Enhancement 實戰演練與除錯技巧]]
 - [[07-Custom-BAPI|自訂 BAPI 開發：從建表到 Release]]
+
+### Module Pool 與除錯
+
+- [[Module-Pool-基礎-對話框設計|Module Pool 基礎：PBO／PAI 與對話框設計]]
+- [[Module-Pool-進階-TableControl與動態篩選|Module Pool 進階：Table Control 與動態篩選]]
+- [[ABAP-Debugging技巧|ABAP Debugging 技巧整理]]
 
 ### OO ABAP 系列
 

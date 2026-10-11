@@ -1,15 +1,15 @@
 ---
-title: "從 B1 到 S/4HANA：一張生產訂單，為什麼要拆成六張表"
+title: 從 B1 到 S/4HANA：一張生產訂單，為什麼要拆成六張表
 tags:
   - SAP
   - S4HANA
   - PP
 created: 2026-07-16
 status: active
-area: resources
+area: public
 publish: true
-source: "[[SAP PP Tables]]"
-description: "拆解 S/4HANA 生產訂單執行的六張資料表（AUFK/AFKO/AFPO/AFVC/RESB/AFRU），對照 B1 兩張表工單的差異，理解工序確認與組件預留的查詢邏輯。"
+source: "[[S4H-PP-Tables]]"
+description: 拆解 S/4HANA 生產訂單執行的六張資料表（AUFK/AFKO/AFPO/AFVC/RESB/AFRU），對照 B1 兩張表工單的差異，理解工序確認與組件預留的查詢邏輯。
 keywords:
   - S/4HANA 生產訂單
   - AUFK AFKO AFPO
@@ -17,8 +17,6 @@ keywords:
   - AFRU 訂單確認
   - RESB 預留
 ---
-
-# 從 B1 到 S/4HANA：一張生產訂單，為什麼要拆成六張表
 
 ## 前言
 

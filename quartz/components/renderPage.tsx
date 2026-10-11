@@ -257,7 +257,11 @@ export function renderPage(
     </div>
   )
 
-  const lang = componentData.fileData.frontmatter?.lang ?? cfg.locale?.split("-")[0] ?? "en"
+  // 中文要保留地區碼（zh-TW），瀏覽器才會選繁體字形；其他語言照 Quartz 原本只留語言碼
+  const lang =
+    componentData.fileData.frontmatter?.lang ??
+    (cfg.locale?.startsWith("zh") ? cfg.locale : cfg.locale?.split("-")[0]) ??
+    "en"
   const direction = i18n(cfg.locale).direction ?? "ltr"
   const doc = (
     <html lang={lang} dir={direction}>

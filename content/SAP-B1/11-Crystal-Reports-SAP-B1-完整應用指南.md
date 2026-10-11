@@ -5,12 +5,19 @@ tags:
   - B1
   - Crystal_Reports
 created: 2026-03-15
-status: completed
-area: resources
+status: active
+area: public
 publish: true
+source:
+  - "[[B1-Crystal Report]]"
+  - "[[CR-報表]]"
+  - "[[CR-報表教育訓練]]"
+  - "[[CR-B1 HANA 下載的CR報表如何設定連線]]"
+  - "[[CR-如何移除浮水印_列印由 SAP Business One]]"
+  - "[[CR-常用格式化公式]]"
+  - "[[CR-How to Work with SAP Crystal Reports in SAP Business One]]"
+  - "[[CR-如何重新安裝SAP Crystal Report for B1]]"
 ---
-
-# Crystal Reports 在 SAP B1 中的完整應用指南
 
 ## 前言
 
@@ -147,17 +154,3 @@ Crystal Reports 的學習曲線比多數人預期的短，但要做出「客戶�
 3. 掌握 CR 版面設計（讓資料好看）
 
 三者缺一不可。許多顧問 SQL 寫得很好，但版面調整不到位；或者版面漂亮，但資料邏輯有誤。建議從真實客戶案例（例如發票、對帳單）入手，完整走過一遍設計到上線的流程，會比看教學影片有效得多。
-
----
-
-## 來源筆記
-
-- [[Crystal Report]]
-- [[CR報表]]
-- [[CR報表教育訓練]]
-- [[Crystal Report  - B1 HANA 下載的CR報表如何設定連線]]
-- [[Crystal Report - 如何移除浮水印_列印由 SAP Business One]]
-- [[Crystal Report 常用格式化公式]]
-- [[How to Work with SAP Crystal Reports in SAP  Business One]]
-- [[如何重新安裝SAP Crystal Report for B1]]
-- [[Crystal Report]]
