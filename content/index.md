@@ -20,6 +20,6 @@ pin: true
 
 ### AI 與 ABAP
 
-- [[用AI但不外包思考|用 AI 學 ABAP 但不外包思考：四個階段，三個轉折]]
+- [[ai-without-outsourcing-thinking|用 AI 學 ABAP 但不外包思考：四個階段，三個轉折]]
 
 舊文章正在逐篇重新審閱，確認過的會陸續放回來。
