@@ -1,5 +1,12 @@
 ---
 title: "SAP GUI Cheat Sheet"
+description: "整理 SAP GUI 安裝後的常用設定：SAP Logon 新增連線與登入語言、Belize 與 Corbu 等佈景主題、Display Technical Names 顯示 T-Code、User Profile 的日期與小數格式，以及 SE38 建立報表，換電腦時照這份對照。"
+keywords:
+  - SAP GUI 設定
+  - SAP Logon
+  - User Profile
+  - Display Technical Names
+  - SE38 建立報表
 tags:
   - SAP
   - ABAP
@@ -8,7 +15,7 @@ tags:
 created: 2026-05-14
 status: active
 area: public
-publish: true
+publish: false
 ---
 
 > 涵蓋 SAP GUI 安裝後的常用設定與操作入口，適合初次設定或換電腦時快速對照。

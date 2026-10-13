@@ -6,7 +6,7 @@ tags:
 created: 2026-07-16
 status: active
 area: public
-publish: true
+publish: false
 source: "[[ABAP開發簡介]], [[01. Basic of SAP and ABAP]]"
 description: "整理 SAP 開發環境基礎：Client 與 MANDT 概念、Package 命名前綴、Transaction Code 操作慣例、ABAP Workbench 工具總覽，開發前快速掌握這幾個必懂規則。"
 keywords:

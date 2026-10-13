@@ -7,7 +7,7 @@ tags:
 created: 2026-07-16
 status: active
 area: public
-publish: true
+publish: false
 source: "[[S4H-SD-Tables]]"
 description: 整理 S/4HANA SD 模組資料表（VBAK/VBAP/VBEP、VBFA）與開發注意事項，對照 B1 銷售流程的資料表差異，快速掌握排程列與單據流追蹤邏輯。
 keywords:

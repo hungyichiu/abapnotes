@@ -1,5 +1,13 @@
 ---
 title: "自訂 BAPI 開發：從建表到 Release"
+description: "整理自訂 BAPI 的開發流程：SE11 建表、SE37 建立 RFC-Enabled 的 Function Module（回傳 BAPIRET2）、SWO1 建立 Business Object 並綁定 Method，以及 BO 與 Method 兩層 Release，開發前先掌握命名規則與常見陷阱。"
+keywords:
+  - 自訂 BAPI 開發
+  - SWO1 Business Object
+  - BAPIRET2
+  - BAPI Explorer
+  - Release 狀態
+  - SE37
 tags:
   - SAP
   - ABAP
@@ -7,7 +15,7 @@ tags:
 created: 2026-07-14
 status: active
 area: public
-publish: true
+publish: false
 source:
   - "[[ABAP-BAPI-Introduction]]"
   - "[[ABAP-BAPI-Creation of Table]]"

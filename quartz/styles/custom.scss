@@ -145,3 +145,58 @@ input:focus-visible {
     animation: none !important;
   }
 }
+
+// ---------------------------------------------------------------
+// 首頁開場：一句定位當主角，底下三條軌道各一個起點
+// ---------------------------------------------------------------
+.home-hero h1 {
+  font-size: 2.6rem;
+  line-height: 1.2;
+  margin: 0.4rem 0 1.2rem;
+}
+
+.home-hero p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  max-width: 34em;
+  color: var(--darkgray);
+}
+
+.home-tracks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.6rem;
+  margin: 2.4rem 0 3.2rem;
+
+  @media all and (max-width: 800px) {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+}
+
+.home-track {
+  border-top: 2px solid var(--dark);
+  padding-top: 0.7rem;
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+  }
+
+  p {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    margin: 0.4rem 0;
+  }
+
+  p:last-child {
+    color: var(--gray);
+    font-size: 0.88rem;
+
+    // 「看全部」這種短連結不要被折成兩行
+    a {
+      white-space: nowrap;
+    }
+  }
+}

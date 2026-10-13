@@ -1,5 +1,12 @@
 ---
 title: "SQL 預存程序在 SAP B1 中的應用：卡控與自動化"
+description: "整理用 SBO_SP_TransactionNotification 掛載客製 SP 做資料卡控的方法：參數簽章、_CmSp_ 命名、錯誤碼慣例，附統編不可重複等四個案例與常見寫錯法，上線前對照檢查。"
+keywords:
+  - SAP B1 預存程序
+  - SBO_SP_TransactionNotification
+  - 資料卡控
+  - Transaction Notification
+  - OCRD LicTradNum
 tags:
   - SAP
   - B1
@@ -7,7 +14,7 @@ tags:
 created: 2026-03-23
 status: active
 area: public
-publish: true
+publish: false
 source:
   - "[[SQL-SP-預存程序]]"
   - "[[SQL-SP-How to check object type]]"

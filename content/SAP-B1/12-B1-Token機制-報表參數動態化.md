@@ -1,5 +1,12 @@
 ---
 title: "B1 Token 機制：讓報表參數動態化"
+description: "整理 SAP B1 Token 語法（參數名@SQL），涵蓋 OITM、OCRD、OACT、OWHS、OFPR 的選擇元件、DocKey@ 與 ObjectId@，並對照 FMS 的差異，設計 Crystal Reports 參數前先看這篇。"
+keywords:
+  - SAP B1 Token
+  - Crystal Reports 參數
+  - DocKey@
+  - OCRD OITM
+  - FMS 差異
 tags:
   - SAP
   - B1
@@ -7,7 +14,7 @@ tags:
 created: 2026-03-17
 status: active
 area: public
-publish: true
+publish: false
 source:
   - "[[CR-Syntax and Rules for Defining Tokens]]"
   - "[[CR-Tokens for Creating SAP Business One Controls]]"

@@ -1,14 +1,21 @@
 ---
 title: Find BAPI
+description: "整理三種找 BAPI 的方法：BAPI Explorer 依業務物件瀏覽、SE37 用 BAPI_SALESORDER_* 等命名規則搜尋、SWO1 以 BUS2032 查物件方法，並附 F8 測試與 COMMIT WORK 提醒，整合開發前先確認候選 BAPI。"
+keywords:
+  - Find BAPI
+  - BAPI Explorer
+  - SE37
+  - SWO1
+  - COMMIT WORK
 tags:
   - ABAP
-  - wiki
+  - cheatsheet
   - BAPI
   - Interface
 created: 2026-06-29
 status: active
 area: public
-publish: true
+publish: false
 sources:
   - "[[ABAP-BAPI-Introduction]]"
   - "[[ABAP-BAPI-Comparison of Customized BAPI with SAP BAPI]]"

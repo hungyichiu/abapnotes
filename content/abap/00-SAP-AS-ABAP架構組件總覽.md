@@ -6,7 +6,7 @@ tags:
 created: 2026-07-16
 status: active
 area: public
-publish: true
+publish: false
 source: "[[ABAP-AS ABAP 架構組件總覽]]"
 description: 整理 SAP AS ABAP 系統架構組件：ICM、SAP Gateway、Dispatcher、Work Process、Enqueue Server、User Context 的分工與請求流程，附顧問實戰排查速記。
 keywords:

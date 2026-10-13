@@ -9,7 +9,7 @@ tags:
 created: 2026-07-16
 status: active
 area: public
-publish: true
+publish: false
 source: "[[SAP SD Tables]], [[SAP MM Tables]], [[SAP PP Tables]]"
 description: "一張速查表對照 B1 與 S/4HANA 在 SD/MM/PP 三個模組的資料表差異（VBEP、EKBE、製程路徑），快速找到該查哪張表。"
 keywords:

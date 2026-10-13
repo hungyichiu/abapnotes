@@ -6,7 +6,7 @@ tags:
 created: 2026-07-16
 status: active
 area: public
-publish: true
+publish: false
 source: "[[01. Basic of SAP and ABAP]], [[ABAP 101 - Basic of SAP and ABAP]]"
 description: "整理 SAP 系統架構基礎：三層架構、NetWeaver、ABAP/4 定位、功能與技術模組分類、系統環境與 Transport Request、SAP Logon 設定、專案類型，開發前快速掌握全貌。"
 keywords:

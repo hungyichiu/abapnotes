@@ -1,5 +1,12 @@
 ---
 title: "SAP BAdI：用 Template Method 重新理解"
+description: "把 BAdI 對應到 Template Method：SAP 標準程式是父類別，BAdI Definition 是 ABSTRACT Method，Implementation 是子類別；以 if_ex_me_purchreq_release 為例，附 SE18、SE19 流程，實作前先理解擴充點設計。"
+keywords:
+  - SAP BAdI 設計原理
+  - Template Method
+  - SE18 SE19
+  - Enhancement Spot
+  - OCP 開放封閉原則
 tags:
   - ABAP
   - OOP
@@ -7,7 +14,7 @@ tags:
 created: 2026-07-14
 status: active
 area: public
-publish: true
+publish: false
 ---
 
 > OO ABAP 系列第 7 篇，共 8 篇：[[08-OO-ABAP-6-TemplateMethod與Facade|上一篇：Template Method 與 Facade]] → 本篇：BAdI 案例 → [[08-OO-ABAP-8-BAPI案例|下一篇：BAPI 案例]]

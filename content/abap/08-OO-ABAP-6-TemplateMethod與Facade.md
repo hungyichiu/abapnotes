@@ -1,5 +1,12 @@
 ---
 title: "設計模式：Template Method + Facade"
+description: "整理 Template Method 與 Facade：用 ABSTRACT Class 鎖住流程骨架、子類別 REDEFINITION 填入細節；再用 zcl_sales_order_facade 包裝 BAPI_SALESORDER_CREATEFROMDAT2，把 BAPIRET2 轉成例外，並對比兩者方向。"
+keywords:
+  - ABAP Template Method
+  - ABAP Facade Pattern
+  - ABSTRACT Method
+  - REDEFINITION
+  - BAPI_SALESORDER_CREATEFROMDAT2
 tags:
   - ABAP
   - OOP
@@ -7,7 +14,7 @@ tags:
 created: 2026-07-14
 status: active
 area: public
-publish: true
+publish: false
 ---
 
 > OO ABAP 系列第 6 篇，共 8 篇：[[08-OO-ABAP-5-Strategy與Observer|上一篇：Strategy 與 Observer]] → 本篇：Template Method 與 Facade → [[08-OO-ABAP-7-BAdI案例|下一篇：BAdI 案例]]

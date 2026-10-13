@@ -1,5 +1,12 @@
 ---
 title: "DTW 資料傳輸工作台：主檔匯入最佳實踐"
+description: "整理 DTW 匯入 SAP B1 主檔的做法：OCRD、OITM、OACT、OHEM 的必填欄位與匯入順序、客製化範本、常見錯誤排除與小批量測試，匯入客戶資料前先掌握這些重點。"
+keywords:
+  - SAP B1 DTW 主檔匯入
+  - Data Transfer Workbench
+  - OCRD 業務夥伴
+  - OACT 會計科目
+  - DI API
 tags:
   - SAP
   - B1
@@ -7,7 +14,7 @@ tags:
 created: 2026-03-05
 status: active
 area: public
-publish: true
+publish: false
 source:
   - "[[B1-DTW-總覽]]"
   - "[[B1-DTW-欄位名稱不可為NULL錯誤]]"

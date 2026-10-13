@@ -1,14 +1,21 @@
 ---
 title: Find BAdI
+description: "整理三步驟找 BAdI：SE18 與 SE84 關鍵字搜尋、在 SE24 的 CL_EXITHANDLER GET_INSTANCE 設中斷點看 EXIT_NAME，再用 SE19 建立 Enhancement Implementation，客製開發前先確認切入點。"
+keywords:
+  - Find BAdI
+  - SE18
+  - CL_EXITHANDLER
+  - SE19 Enhancement Implementation
+  - SE84
 tags:
   - ABAP
-  - wiki
+  - cheatsheet
   - BAdI
   - Enhancement
 created: 2026-06-29
 status: active
 area: public
-publish: true
+publish: false
 sources:
   - "[[ABAP-ENH-Enhancement_筆記]]"
   - "[[ABAP-ENH-BAdIs-CheatSheet]]"

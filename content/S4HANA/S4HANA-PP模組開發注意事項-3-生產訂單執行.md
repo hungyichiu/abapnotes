@@ -7,7 +7,7 @@ tags:
 created: 2026-07-16
 status: active
 area: public
-publish: true
+publish: false
 source: "[[S4H-PP-Tables]]"
 description: 拆解 S/4HANA 生產訂單執行的六張資料表（AUFK/AFKO/AFPO/AFVC/RESB/AFRU），對照 B1 兩張表工單的差異，理解工序確認與組件預留的查詢邏輯。
 keywords:

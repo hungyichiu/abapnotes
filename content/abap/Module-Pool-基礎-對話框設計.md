@@ -6,7 +6,7 @@ tags:
 created: 2026-07-16
 status: evergreen
 area: public
-publish: true
+publish: false
 source: "[[ABAP-課程-7. Module Pool Programming 1-49]]"
 description: 整理 ABAP Module Pool 基礎：PBO/PAI 事件模型、Subscreen、Modal Dialog Box、畫面堆疊行為、AT EXIT-COMMAND 與 CHAIN/ENDCHAIN，開發對話框畫面前必懂的機制。
 keywords:

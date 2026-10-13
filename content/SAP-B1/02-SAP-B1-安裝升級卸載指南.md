@@ -1,12 +1,19 @@
 ---
 title: "SAP B1 安裝前檢查、升級與完整卸載指南"
+description: "整理 SAP B1 安裝前環境檢查、SQL Server 與 HANA 選型、升級前備份（SBO-COMMON、SLDData）與完整卸載六步驟，附 Revo Uninstaller 強制移除，安裝或升級前照這份對照檢查。"
+keywords:
+  - SAP B1 安裝升級卸載
+  - SBO-COMMON
+  - SLDData
+  - Setup Wizard
+  - Revo Uninstaller
 tags:
   - SAP
   - B1
 created: 2026-03-03
 status: active
 area: public
-publish: true
+publish: false
 source:
   - "[[B1-安裝-安裝TIPS]]"
   - "[[B1-安裝-安裝項目]]"

@@ -1,5 +1,12 @@
 ---
 title: "SAP BAPI：用 Facade Pattern 重新理解"
+description: "說明 BAPI 本身就是 Facade，再包一層 zcl_sales_order_facade 處理 BAPI_SALESORDER_CREATEFROMDAT2 的參數準備、BAPIRET2 轉例外與 BAPI_TRANSACTION_COMMIT，並示範注入 Mock 做單元測試，包裝 BAPI 前照這份設計。"
+keywords:
+  - BAPI Facade 包裝
+  - BAPI_SALESORDER_CREATEFROMDAT2
+  - BAPIRET2 例外轉換
+  - BAPI_TRANSACTION_COMMIT
+  - ABAP Unit Mock
 tags:
   - ABAP
   - OOP
@@ -7,7 +14,7 @@ tags:
 created: 2026-07-14
 status: active
 area: public
-publish: true
+publish: false
 ---
 
 > OO ABAP 系列第 8 篇，共 8 篇：[[08-OO-ABAP-7-BAdI案例|上一篇：BAdI 案例]] → 本篇：BAPI 案例

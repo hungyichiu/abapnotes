@@ -72,13 +72,13 @@ export default {
     },
     folderContent: {
       folder: "資料夾",
-      itemsUnderFolder: ({ count }) => `此資料夾下有 ${count} 條筆記。`,
+      itemsUnderFolder: ({ count }) => `此資料夾下有 ${count} 篇筆記。`,
     },
     tagContent: {
       tag: "標籤",
       tagIndex: "標籤索引",
-      itemsUnderTag: ({ count }) => `此標籤下有 ${count} 條筆記。`,
-      showingFirst: ({ count }) => `顯示前 ${count} 個標籤。`,
+      itemsUnderTag: ({ count }) => `此標籤下有 ${count} 篇筆記。`,
+      showingFirst: ({ count }) => `只列出前 ${count} 篇。`,
       totalTags: ({ count }) => `總共有 ${count} 個標籤。`,
     },
   },

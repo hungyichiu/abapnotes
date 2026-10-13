@@ -1,5 +1,12 @@
 ---
 title: "Enhancement Framework：Implicit 與 Explicit 擴充"
+description: "Enhancement 系列第 3 篇，說明 Enhancement Framework 的 Implicit 與 Explicit 擴充、Enhancement Point 與 Section 的差別、SE38 建立步驟與 SPAU_ENH 升級確認，並整理查找擴充點的順序。"
+keywords:
+  - Enhancement Framework
+  - Implicit Enhancement
+  - Enhancement Point Section
+  - SPAU_ENH
+  - SE19
 tags:
   - SAP
   - ABAP
@@ -7,7 +14,7 @@ tags:
 created: 2026-05-15
 status: active
 area: public
-publish: true
+publish: false
 source:
   - "[[ABAP-學習-開發核心：RICEFW 學習路徑指南]]"
 ---

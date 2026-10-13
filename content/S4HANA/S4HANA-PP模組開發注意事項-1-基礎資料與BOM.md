@@ -7,7 +7,7 @@ tags:
 created: 2026-07-16
 status: active
 area: public
-publish: true
+publish: false
 source: "[[S4H-PP-Tables]]"
 description: 整理 S/4HANA PP 模組的物料工廠主資料與 BOM 資料表結構（MAST/STKO/STPO/STAS），對照 B1 兩張表的 BOM 設計，理解多工廠多版本的查詢邏輯。
 keywords:

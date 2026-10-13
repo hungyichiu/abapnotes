@@ -5,7 +5,7 @@ tags: []
 created: 2026-10-11
 status: active
 area: public
-publish: true
+publish: false
 ---
 
 RESTful ABAP Programming 筆記：Action、Cross-BO、Value Help 實作。

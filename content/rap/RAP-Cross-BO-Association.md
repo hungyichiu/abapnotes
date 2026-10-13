@@ -1,5 +1,12 @@
 ---
 title: "RAP 跨業務物件關聯 (Cross-BO Associations)"
+description: "整理 RAP 跨 BO 關聯的來源解析與目標解析差異（外鍵由哪一邊持有）、BDEF 的 Create-by-Association、Link／Unlink action、Inverse function、using 反向關聯與 with cross associations，建模前先分清解析方向。"
+keywords:
+  - RAP 跨 BO 關聯
+  - Cross-BO Association
+  - Create-by-Association
+  - 來源解析 目標解析
+  - Inverse function
 tags:
   - ABAP
   - RAP
@@ -7,7 +14,7 @@ tags:
 created: 2026-05-07
 status: active
 area: public
-publish: true
+publish: false
 ---
 
 ## 為什麼要分清楚關聯的解析方向

@@ -1,5 +1,12 @@
 ---
 title: "SAP RAP Action 開發實戰筆記：兩層式架構"
+description: "整理 RAP Managed Scenario 的 Action 五步驟：BDEF 的 action 與 features : instance、Behavior Pool 的 get_instance_features，附 CX_RAP_HANDLER_NOT_IMPLEMENTED 排查。"
+keywords:
+  - RAP Action
+  - "features : instance"
+  - get_instance_features
+  - Behavior Pool
+  - CX_RAP_HANDLER_NOT_IMPLEMENTED
 tags:
   - ABAP
   - RAP
@@ -7,7 +14,7 @@ tags:
 created: 2026-04-29
 status: active
 area: public
-publish: true
+publish: false
 ---
 
 ## 為什麼需要 Action

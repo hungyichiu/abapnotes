@@ -1,5 +1,12 @@
 ---
 title: "RAP Value Help (F4) 實作指南"
+description: "依四步驟整理 RAP Value Help（F4）：Provider View 的 @ObjectModel.text.element、Consumption View 的 @Consumption.valueHelpDefinition、MDE 的 @UI.textArrangement，開發外鍵欄位前先掌握順序。"
+keywords:
+  - RAP Value Help
+  - "@Consumption.valueHelpDefinition"
+  - "@ObjectModel.text.element"
+  - "@UI.textArrangement"
+  - Fiori Elements F4
 tags:
   - ABAP
   - RAP
@@ -7,7 +14,7 @@ tags:
 created: 2026-04-29
 status: active
 area: public
-publish: true
+publish: false
 ---
 
 ## 為什麼需要 Value Help

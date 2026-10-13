@@ -1,5 +1,12 @@
 ---
 title: "Enhancement 實戰演練與除錯技巧"
+description: "Enhancement 系列第 4 篇，用 VA01、CAT2、MM01 的實例練習 Customer Exit 三種類型與 Enhancement Point、Section，並以 CL_EXITHANDLER 的 GET_INSTANCE 中斷點找 Classic BAdI，接手舊程式時照這份查。"
+keywords:
+  - Enhancement 實戰
+  - CL_EXITHANDLER GET_INSTANCE
+  - Customer Exit 練習
+  - CMOD
+  - BAdI 除錯
 tags:
   - SAP
   - ABAP
@@ -7,7 +14,7 @@ tags:
 created: 2026-07-14
 status: active
 area: public
-publish: true
+publish: false
 source:
   - "[[ABAP-課程-10. Enhancements & Modifications]]"
   - "[[ABAP-ENH-Enhancement_筆記]]"

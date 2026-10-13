@@ -1,5 +1,12 @@
 ---
-title: "New Syntax:進階表格與物件操作"
+title: "New Syntax：進階表格與物件操作"
+description: "New Syntax 系列第 3 篇，說明以 INNER JOIN @internal_table 取代 FOR ALL ENTRIES IN 並避開空表撈全部資料的陷阱，另介紹 NEW 與 CAST 的物件操作，判斷程式是否為現代寫法。"
+keywords:
+  - FOR ALL ENTRIES
+  - INNER JOIN Internal Table
+  - ABAP NEW CAST
+  - ABAP New Syntax
+  - HASHED TABLE
 tags:
   - SAP
   - ABAP
@@ -7,23 +14,23 @@ tags:
 created: 2026-05-15
 status: active
 area: public
-publish: true
+publish: false
 source:
   - "[[ABAP-語法-NEW SYNTAX]]"
   - "[[ABAP-可重用開發技巧 - PO Print 案例]]"
 ---
 
-> 本篇是「New Syntax」系列第 3 篇,共 3 篇:[[02-New-Syntax-1-資料宣告與迴圈|資料宣告與迴圈]] → [[02-New-Syntax-2-條件與表格建構表達式|條件與表格建構表達式]] → 進階表格與物件操作(本篇)
+> 本篇是「New Syntax」系列第 3 篇，共 3 篇:[[02-New-Syntax-1-資料宣告與迴圈|資料宣告與迴圈]] → [[02-New-Syntax-2-條件與表格建構表達式|條件與表格建構表達式]] → 進階表格與物件操作(本篇)
 
 ## 為什麼這兩個語法值得單獨拉出來講
 
-前兩篇的語法多半是「寫得更短」,這篇的兩個語法則直接**消除一個典型陷阱**(`FOR ALL ENTRIES IN` 空表問題),以及讓物件操作跟表格操作一樣可以省略中間變數。熟悉這兩個語法,是判斷一支 ABAP 程式是否用「現代寫法」維護的重要指標。
+前兩篇的語法多半是「寫得更短」,這篇的兩個語法則直接**消除一個典型陷阱**(`FOR ALL ENTRIES IN` 空表問題),以及讓物件操作跟表格操作一樣可以省略中間變數。熟悉這兩個語法，是判斷一支 ABAP 程式是否用「現代寫法」維護的重要指標。
 
 ---
 
 ## Internal Table 直接參與 SQL JOIN
 
-這是 ABAP 7.40+ 的進階語法,讓 Internal Table 直接作為 JOIN 對象,取代 `FOR ALL ENTRIES IN`:
+這是 ABAP 7.40+ 的進階語法，讓 Internal Table 直接作為 JOIN 對象，取代 `FOR ALL ENTRIES IN`:
 
 ```abap
 " 舊語法:FOR ALL ENTRIES IN(空表陷阱!)
@@ -45,7 +52,7 @@ SELECT FROM ekpo INNER JOIN @gt_header AS h
   INTO TABLE @gt_items.
 ```
 
-`FOR ALL ENTRIES IN` 的著名陷阱:driver table 為空時,SQL 不加任何條件,等同撈出全部資料。新語法的 `INNER JOIN @table` 完全消除此風險。
+`FOR ALL ENTRIES IN` 的著名陷阱:driver table 為空時,SQL 不加任何條件，等同撈出全部資料。新語法的 `INNER JOIN @table` 完全消除此風險。
 
 ---
 

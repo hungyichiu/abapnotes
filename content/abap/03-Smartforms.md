@@ -1,5 +1,12 @@
 ---
 title: "Smart Forms：採購單批次列印與 control_parameters"
+description: "整理 Smart Forms 採購單批次列印：SSF_FUNCTION_MODULE_NAME 動態取 FM 名稱、control_parameters 的 no_open 與 no_close 搭配 AT FIRST、AT LAST 合併成單一 Spool Job，附 SP01 排查，做批次列印前照這份設計。"
+keywords:
+  - Smart Forms 批次列印
+  - control_parameters
+  - SSF_FUNCTION_MODULE_NAME
+  - Spool Job
+  - SMARTFORMS
 tags:
   - SAP
   - ABAP
@@ -7,7 +14,7 @@ tags:
 created: 2026-05-15
 status: active
 area: public
-publish: true
+publish: false
 source:
   - "[[ABAP-可重用開發技巧 - PO Print 案例]]"
   - "[[ABAP-課程-12. Smartforms]]"

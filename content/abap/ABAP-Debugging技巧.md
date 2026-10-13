@@ -6,7 +6,7 @@ tags:
 created: 2026-07-16
 status: active
 area: public
-publish: true
+publish: false
 source: "[[ABAP-課程-5. Debugging 1-12]]"
 description: 整理 ABAP Debugging 技巧：F5-F8 執行鍵、SY-SUBRC/SY-TABIX、動態與靜態斷點、Watchpoint、Skip Statement 與彈出視窗除錯技巧。
 keywords:

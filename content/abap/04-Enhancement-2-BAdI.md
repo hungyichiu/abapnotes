@@ -1,5 +1,12 @@
 ---
 title: "BAdI：業務邏輯擴充的現代解法"
+description: "Enhancement 系列第 2 篇，整理 Classic BAdI 與 New BAdI 的差異、用 SE18 與 SE19 建立 Implementation 的步驟、Filter-dependent BAdI 與多個 Implementation 的執行行為，實作前先分清這幾件事。"
+keywords:
+  - SAP BAdI
+  - SE18 SE19
+  - Filter-dependent BAdI
+  - Enhancement Spot
+  - Classic BAdI
 tags:
   - SAP
   - ABAP
@@ -7,7 +14,7 @@ tags:
 created: 2026-05-15
 status: active
 area: public
-publish: true
+publish: false
 source:
   - "[[ABAP-學習-開發核心：RICEFW 學習路徑指南]]"
   - "[[ABAP-課程-8. ABAP OOPS 1-109]]"

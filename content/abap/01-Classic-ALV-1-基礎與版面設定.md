@@ -1,5 +1,12 @@
 ---
-title: "Classic ALV:基礎與版面設定"
+title: "Classic ALV：基礎與版面設定"
+description: "Classic ALV 系列第 1 篇，整理 REUSE_ALV_GRID_DISPLAY 的 Field Catalog 手動與自動合併、LIST 與 GRID 差異、Layout、i_save 與 it_sort 小計設定，開發報表前先掌握顯示層的基本寫法。"
+keywords:
+  - Classic ALV
+  - REUSE_ALV_GRID_DISPLAY
+  - Field Catalog
+  - ALV Layout
+  - REUSE_ALV_FIELDCATALOG_MERGE
 tags:
   - SAP
   - ABAP
@@ -7,7 +14,7 @@ tags:
 created: 2026-05-15
 status: active
 area: public
-publish: true
+publish: false
 source:
   - "[[ABAP-課程-6. ABAP List Viwer(ALV) 1-30]]"
   - "[[ABAP-ALV-總覽]]"
@@ -15,13 +22,13 @@ source:
   - "[[ABAP-ALV-scenario-01]]"
 ---
 
-> 本篇是「Classic ALV」系列第 1 篇,共 3 篇:基礎與版面設定(本篇)→ [[01-Classic-ALV-2-互動與跳轉|互動與跳轉]] → [[01-Classic-ALV-3-可編輯ALV與資料回寫|可編輯 ALV 與資料回寫]]
+> 本篇是「Classic ALV」系列第 1 篇，共 3 篇：基礎與版面設定(本篇)→ [[01-Classic-ALV-2-互動與跳轉|互動與跳轉]] → [[01-Classic-ALV-3-可編輯ALV與資料回寫|可編輯 ALV 與資料回寫]]
 
 ## 【So What】為什麼用 ALV
 
-ABAP 最原始的報表輸出是 `WRITE` 語句——把資料一行一行寫到畫面上。這在功能上沒問題,但缺少排序、篩選、匯出 Excel、加總等功能,使用者每次都要手動處理。
+ABAP 最原始的報表輸出是 `WRITE` 語句——把資料一行一行寫到畫面上。這在功能上沒問題，但缺少排序、篩選、匯出 Excel、加總等功能，使用者每次都要手動處理。
 
-**ABAP List Viewer(ALV)** 是 SAP 提供的標準報表框架,內建這些功能,不需要自己寫。對顧問而言,這也是幾乎每個客製報表需求都會用到的基本工具——省下重造排序、篩選、匯出邏輯的時間。一張 ALV 報表,使用者可以:
+**ABAP List Viewer(ALV)** 是 SAP 提供的標準報表框架，內建這些功能，不需要自己寫。對顧問而言，這也是幾乎每個客製報表需求都會用到的基本工具——省下重造排序、篩選、匯出邏輯的時間。一張 ALV 報表，使用者可以:
 
 - 點擊欄位標題排序
 - 設定篩選條件
@@ -29,13 +36,13 @@ ABAP 最原始的報表輸出是 `WRITE` 語句——把資料一行一行寫到
 - 設定群組小計
 - 調整欄位顯示順序與寬度
 
-Classic ALV 指的是以 `REUSE_ALV_*` 系列 Function Module 為核心的傳統實作方式,是 ABAP 顧問最常接觸的 ALV 形式。本篇先處理「顯示一份資料」需要的基礎設定,第 2、3 篇再進入互動與可編輯功能。
+Classic ALV 指的是以 `REUSE_ALV_*` 系列 Function Module 為核心的傳統實作方式，是 ABAP 顧問最常接觸的 ALV 形式。本篇先處理「顯示一份資料」需要的基礎設定，第 2、3 篇再進入互動與可編輯功能。
 
 ---
 
 ## 【What】ALV 的兩件事
 
-不管用哪種 ALV 函數,核心只有兩件事:
+不管用哪種 ALV 函數，核心只有兩件事:
 
 1. **Field Catalog**:告訴 ALV 每個欄位的設定(標題、寬度、對齊、是否可排序)
 2. **資料綁定**:把 internal table 傳給 ALV 顯示
@@ -55,7 +62,7 @@ CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
 
 ### 自動合併(REUSE_ALV_FIELDCATALOG_MERGE)
 
-讓 SAP 自動從 DDIC 結構讀取欄位定義,再手動調整特定欄位:
+讓 SAP 自動從 DDIC 結構讀取欄位定義，再手動調整特定欄位:
 
 ```abap
 DATA: lt_fcat TYPE slis_t_fieldcat_alv.
@@ -69,11 +76,11 @@ CALL FUNCTION 'REUSE_ALV_FIELDCATALOG_MERGE'
     ct_fieldcat            = lt_fcat.
 ```
 
-優點:快速。缺點:欄位順序由 DDIC 決定,欄位名稱也直接沿用,較難控制呈現。
+優點：快速。缺點：欄位順序由 DDIC 決定，欄位名稱也直接沿用，較難控制呈現。
 
 ### 手動建立(實務首選)
 
-直接宣告每個欄位的設定,完全掌控:
+直接宣告每個欄位的設定，完全掌控:
 
 ```abap
 DATA: lt_fcat TYPE slis_t_fieldcat_alv,
@@ -106,9 +113,9 @@ ls_fcat-datatype    = 'CURR'.        " 貨幣格式
 APPEND ls_fcat TO lt_fcat.
 ```
 
-手動建立雖然比較長,但欄位順序、標題、格式完全自訂,是現場最常見的做法。
+手動建立雖然比較長，但欄位順序、標題、格式完全自訂，是現場最常見的做法。
 
-**加總的分組邏輯**:數量欄位綁定單位欄(`qfieldname`)、金額欄位綁定幣別欄(`cfieldname`),ALV 才會依單位/幣別分組加總,不會把不同單位或幣別的數字混加:
+**加總的分組邏輯**:數量欄位綁定單位欄(`qfieldname`)、金額欄位綁定幣別欄(`cfieldname`),ALV 才會依單位/幣別分組加總，不會把不同單位或幣別的數字混加:
 
 ```abap
 FIELD-SYMBOLS: <fs_fc> TYPE slis_fieldcat_alv.
@@ -127,8 +134,8 @@ Classic ALV 有兩個主要的顯示函數:
 
 | 函數 | 特性 | 使用時機 |
 |------|------|----------|
-| `REUSE_ALV_LIST_DISPLAY` | 純文字清單,類似 WRITE | 僅需簡單報表,不需互動 |
-| `REUSE_ALV_GRID_DISPLAY` | 表格介面,支援滑鼠操作 | 絕大多數情況的首選 |
+| `REUSE_ALV_LIST_DISPLAY` | 純文字清單，類似 WRITE | 僅需簡單報表，不需互動 |
+| `REUSE_ALV_GRID_DISPLAY` | 表格介面，支援滑鼠操作 | 絕大多數情況的首選 |
 
 ```abap
 " LIST:簡單
@@ -151,7 +158,7 @@ CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
 
 ## Layout 設定
 
-`REUSE_ALV_GRID_DISPLAY` 接受一個 `is_layout` 參數,控制整體顯示行為:
+`REUSE_ALV_GRID_DISPLAY` 接受一個 `is_layout` 參數，控制整體顯示行為:
 
 ```abap
 DATA: ls_layout TYPE slis_layout_alv.
@@ -209,7 +216,7 @@ CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
 
 ## 【What For】完整最小程式範本
 
-以下是一個可直接執行的最小 Classic ALV 程式,展示完整的使用模式,先撈資料、建 Field Catalog、設定 Layout,再一次呼叫顯示:
+以下是一個可直接執行的最小 Classic ALV 程式，展示完整的使用模式，先撈資料、建 Field Catalog、設定 Layout,再一次呼叫顯示:
 
 ```abap
 REPORT z_alv_demo.
@@ -278,7 +285,7 @@ START-OF-SELECTION.
 ## 常見陷阱
 
 - **Field Catalog 欄位名稱與 internal table 不符**:`fieldname` 必須與 internal table 的欄位名稱完全一致(包含大小寫),否則欄位會顯示空白
-- **`SELECT` 欄位順序與結構不一致**:用 `INTO TABLE` 時 SAP 依位置對應欄位,順序錯了會報型別不符,改用 `INTO CORRESPONDING FIELDS OF TABLE` 或確保順序一致可避免
+- **`SELECT` 欄位順序與結構不一致**:用 `INTO TABLE` 時 SAP 依位置對應欄位，順序錯了會報型別不符，改用 `INTO CORRESPONDING FIELDS OF TABLE` 或確保順序一致可避免
 
 ---
 

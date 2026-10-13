@@ -1,5 +1,12 @@
 ---
 title: "OO ABAP 命名規則"
+description: "整理 OO ABAP 命名規則：ZCL_、ZIF_、ZCX_ 類型前綴，mv_、ms_、mt_、mo_ 屬性前綴，iv_、rv_、io_ 等方法參數前綴，以及 lv_、lt_ 本地變數前綴，並用定價領域示範領域加角色的命名，寫新 Class 時照這份對照。"
+keywords:
+  - OO ABAP 命名規則
+  - ZCL ZIF ZCX 前綴
+  - ABAP 參數前綴
+  - mv_ ms_ mt_ mo_
+  - ABAP 命名慣例
 tags:
   - ABAP
   - OOP
@@ -7,7 +14,7 @@ tags:
 created: 2026-07-14
 status: active
 area: public
-publish: true
+publish: false
 ---
 
 > OO ABAP 系列第 2 篇，共 8 篇：[[08-OO-ABAP-1-核心邏輯鏈|上一篇：核心邏輯鏈]] → 本篇：命名規則 → [[08-OO-ABAP-3-SOLID原則|下一篇：SOLID 原則]]

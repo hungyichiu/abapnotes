@@ -1,5 +1,12 @@
 ---
-title: "Classic ALV:可編輯 ALV 與資料回寫"
+title: "Classic ALV：可編輯 ALV 與資料回寫"
+description: "Classic ALV 系列第 3 篇，整理 Field Catalog 的 edit 屬性、DATA_CHANGED 事件、mt_mod_cells 與 &DATA_SAVE，以先 SELECT SINGLE 再 UPDATE 的方式回寫資料庫，上線前對照檢查。"
+keywords:
+  - 可編輯 ALV
+  - DATA_CHANGED
+  - mt_mod_cells
+  - ALV 資料回寫
+  - "&DATA_SAVE"
 tags:
   - SAP
   - ABAP
@@ -7,17 +14,17 @@ tags:
 created: 2026-05-15
 status: active
 area: public
-publish: true
+publish: false
 source:
   - "[[ABAP-ALV-scenario-04]]"
   - "[[ABAP-課程-6. ABAP List Viwer(ALV) 1-30]]"
 ---
 
-> 本篇是「Classic ALV」系列第 3 篇,共 3 篇:[[01-Classic-ALV-1-基礎與版面設定|基礎與版面設定]] → [[01-Classic-ALV-2-互動與跳轉|互動與跳轉]] → 可編輯 ALV 與資料回寫(本篇)
+> 本篇是「Classic ALV」系列第 3 篇，共 3 篇:[[01-Classic-ALV-1-基礎與版面設定|基礎與版面設定]] → [[01-Classic-ALV-2-互動與跳轉|互動與跳轉]] → 可編輯 ALV 與資料回寫(本篇)
 
 ## 【So What】為什麼需要可編輯 ALV
 
-前兩篇的 ALV 都是唯讀的:資料庫 → ALV,單向流動。但實務上常遇到「使用者想直接在清單畫面改幾個欄位,不想為了改一個欄位另外開一張交易畫面」的需求,例如在銷售訂單清單上直接改訂單類型、改客戶代碼。這時候需要讓資料流向變成雙向:資料庫 → ALV → 資料庫,也就是可編輯 ALV。
+前兩篇的 ALV 都是唯讀的：資料庫 → ALV,單向流動。但實務上常遇到「使用者想直接在清單畫面改幾個欄位，不想為了改一個欄位另外開一張交易畫面」的需求，例如在銷售訂單清單上直接改訂單類型、改客戶代碼。這時候需要讓資料流向變成雙向：資料庫 → ALV → 資料庫，也就是可編輯 ALV。
 
 與前兩篇的差異:
 
@@ -49,7 +56,7 @@ ENDIF.
 
 ## DATA_CHANGED Callback:捕捉使用者的修改
 
-要接住使用者的編輯動作,需要在顯示時多登記一個事件:
+要接住使用者的編輯動作，需要在顯示時多登記一個事件:
 
 ```abap
 DATA: lt_events TYPE slis_t_event,
@@ -74,7 +81,7 @@ CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
     OTHERS                  = 2.
 ```
 
-`DATA_CHANGED` 這個 FORM 的參數簽名是 SAP 規定的固定格式,使用者每修改一個欄位就觸發一次:
+`DATA_CHANGED` 這個 FORM 的參數簽名是 SAP 規定的固定格式，使用者每修改一個欄位就觸發一次:
 
 ```abap
 FORM data_changed USING pr_data_changed TYPE REF TO cl_alv_changed_data_protocol.
@@ -101,15 +108,15 @@ FORM data_changed USING pr_data_changed TYPE REF TO cl_alv_changed_data_protocol
 ENDFORM.
 ```
 
-`pr_data_changed` 是一個物件參照(`REF TO cl_alv_changed_data_protocol`),這是傳統寫法的 ABAP 程式裡少數強制使用 OO 語法的地方。`mt_mod_cells` 是這個物件裡的一個 Table,每一列代表一個被改過的儲存格,包含 `row_id`(列的 Index)、`fieldname`(改了哪個欄位)、`value`(改後的新值)。
+`pr_data_changed` 是一個物件參照(`REF TO cl_alv_changed_data_protocol`),這是傳統寫法的 ABAP 程式裡少數強制使用 OO 語法的地方。`mt_mod_cells` 是這個物件裡的一個 Table,每一列代表一個被改過的儲存格，包含 `row_id`(列的 Index)、`fieldname`(改了哪個欄位)、`value`(改後的新值)。
 
-**用餐廳點餐理解 DATA_CHANGED 與 Save 的分工**:使用者改欄位就像在菜單上打勾(`DATA_CHANGED` 觸發,記到服務生的小本子 `gt_mod_cells`),按 Save 才像按呼叫鈴(`&DATA_SAVE` 觸發,服務生才真正去廚房下單、寫回資料庫)。不在 `DATA_CHANGED` 裡直接寫資料庫,是因為使用者可能改了又改,每次觸發都寫資料庫會浪費資源、也容易半途出錯。
+**用餐廳點餐理解 DATA_CHANGED 與 Save 的分工**:使用者改欄位就像在菜單上打勾(`DATA_CHANGED` 觸發，記到服務生的小本子 `gt_mod_cells`),按 Save 才像按呼叫鈴(`&DATA_SAVE` 觸發，服務生才真正去廚房下單、寫回資料庫)。不在 `DATA_CHANGED` 裡直接寫資料庫，是因為使用者可能改了又改，每次觸發都寫資料庫會浪費資源、也容易半途出錯。
 
 ---
 
-## 【What For】寫回資料庫:精準 UPDATE
+## 【What For】寫回資料庫：精準 UPDATE
 
-按 Save 觸發 `&DATA_SAVE` 後,才真正把累積的修改寫回去:
+按 Save 觸發 `&DATA_SAVE` 後，才真正把累積的修改寫回去:
 
 ```abap
 FORM user_command USING r_ucomm     TYPE sy-ucomm
@@ -159,23 +166,23 @@ FORM save_data.
 ENDFORM.
 ```
 
-**為什麼不能直接 `UPDATE zsalesorder FROM TABLE gt_data` 整批覆蓋回去**:兩個風險——一是使用者 A、B 同時編輯同一筆資料時,後存的人會把先存的人的修改蓋掉;二是 `gt_data` 裡所有欄位都會被寫回去,包含不該被修改的唯讀欄位。正確做法是先 `SELECT SINGLE` 取出資料庫現有的完整資料,只把被改過的欄位填進去,再 `UPDATE`。
+**為什麼不能直接 `UPDATE zsalesorder FROM TABLE gt_data` 整批覆蓋回去**:兩個風險——一是使用者 A、B 同時編輯同一筆資料時，後存的人會把先存的人的修改蓋掉；二是 `gt_data` 裡所有欄位都會被寫回去，包含不該被修改的唯讀欄位。正確做法是先 `SELECT SINGLE` 取出資料庫現有的完整資料，只把被改過的欄位填進去，再 `UPDATE`。
 
-`COMMIT WORK` 確認資料庫變更正式寫入;沒有這行,`UPDATE` 的結果不會真正生效。`ROLLBACK WORK` 則確保寫入失敗時資料不會只更新一半。
+`COMMIT WORK` 確認資料庫變更正式寫入；沒有這行,`UPDATE` 的結果不會真正生效。`ROLLBACK WORK` 則確保寫入失敗時資料不會只更新一半。
 
 ---
 
 ## 常見陷阱
 
-- **`edit = 'X'` 設了但欄位還是不能編輯**:檢查 Layout 有沒有設 `no_input = 'X'`,這個設定會蓋過個別欄位的 `edit` 設定,把它拿掉即可
-- **`DATA_CHANGED` 有觸發,但畫面資料沒更新**:確認 `READ TABLE ... ASSIGNING` 用的 Field Symbol 型態是自己的資料結構(如 `ty_data`),不是 `lvc_s_modi`,兩者不相容
+- **`edit = 'X'` 設了但欄位還是不能編輯**:檢查 Layout 有沒有設 `no_input = 'X'`,這個設定會蓋過個別欄位的 `edit` 設定，把它拿掉即可
+- **`DATA_CHANGED` 有觸發，但畫面資料沒更新**:確認 `READ TABLE ... ASSIGNING` 用的 Field Symbol 型態是自己的資料結構(如 `ty_data`),不是 `lvc_s_modi`,兩者不相容
 - **忘記 `CLEAR gt_mod_cells`**:使用者可能同一次執行按多次 Save,不清空的話第二次按 Save 會拿舊的修改記錄重複 UPDATE
 
 ---
 
 ## 實作提醒
 
-- 可編輯 ALV 適合「少量欄位、低風險」的快速修改場景;牽涉複雜驗證邏輯或跨表連動的異動,仍建議走標準交易畫面或自訂 Dialog Program,避免在 ALV 裡塞入過多業務規則
+- 可編輯 ALV 適合「少量欄位、低風險」的快速修改場景；牽涉複雜驗證邏輯或跨表連動的異動，仍建議走標準交易畫面或自訂 Dialog Program,避免在 ALV 裡塞入過多業務規則
 - 上線前務必用 Debugger 逐步確認 `DATA_CHANGED` 有被觸發、`gt_mod_cells` 有正確累積、Save 後資料庫確實更新(可用 SE16 覆核)
 
 ---

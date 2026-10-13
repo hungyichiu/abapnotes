@@ -1,5 +1,12 @@
 ---
 title: "Crystal Reports 在 SAP B1 中的完整應用指南"
+description: "整理 Crystal Reports 在 SAP B1 的本地端、伺服器端、Web 三種部署方式，SQL Server 與 HANA 的連線設定（B1CRHPROXY 換成 HDBODBC32）、設計流程、格式化公式與移除浮水印，開發報表前先照這份設定環境。"
+keywords:
+  - Crystal Reports SAP B1
+  - CR 報表設計
+  - HANA ODBC 連線
+  - OLE DB
+  - 報表組織工具
 tags:
   - SAP
   - B1
@@ -7,7 +14,7 @@ tags:
 created: 2026-03-15
 status: active
 area: public
-publish: true
+publish: false
 source:
   - "[[B1-Crystal Report]]"
   - "[[CR-報表]]"

@@ -1,18 +1,25 @@
 import { PageLayout, SharedLayout } from "./quartz/cfg"
 import * as Component from "./quartz/components"
+import { QuartzComponentProps } from "./quartz/components/types"
+
+// 文章頁：不是首頁、不是標籤頁、不是資料夾頁
+const isArticle = (page: QuartzComponentProps) =>
+  page.fileData.slug !== "index" &&
+  !page.fileData.slug!.startsWith("tags/") &&
+  !page.fileData.slug!.endsWith("/index")
 
 // components shared across all pages
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
   header: [],
   afterBody: [
-    Component.PrevNext(),
-    // 留言區只放在文章頁，首頁、標籤頁、資料夾頁不放
+    // 上一篇／下一篇和留言區只放在文章頁，首頁、標籤頁、資料夾頁不放
     Component.ConditionalRender({
-      condition: (page) =>
-        page.fileData.slug !== "index" &&
-        !page.fileData.slug!.startsWith("tags/") &&
-        !page.fileData.slug!.endsWith("/index"),
+      condition: isArticle,
+      component: Component.PrevNext(),
+    }),
+    Component.ConditionalRender({
+      condition: isArticle,
       component: Component.Comments({
       provider: "giscus",
       options: {
@@ -40,10 +47,14 @@ export const sharedPageComponents: SharedLayout = {
 export const defaultContentPageLayout: PageLayout = {
   beforeBody: [
     Component.ConditionalRender({
-      component: Component.Breadcrumbs(),
+      component: Component.Breadcrumbs({ rootName: "首頁" }),
       condition: (page) => page.fileData.slug !== "index",
     }),
-    Component.ArticleTitle(),
+    // 首頁的標題由內文的開場（home-hero）自己畫
+    Component.ConditionalRender({
+      component: Component.ArticleTitle(),
+      condition: (page) => page.fileData.slug !== "index",
+    }),
     Component.ConditionalRender({
       component: Component.ContentMeta(),
       condition: (page) => page.fileData.slug !== "index",
@@ -88,7 +99,7 @@ export const defaultContentPageLayout: PageLayout = {
 
 // components for pages that display lists of pages  (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
-  beforeBody: [Component.Breadcrumbs(), Component.ArticleTitle(), Component.ContentMeta()],
+  beforeBody: [Component.Breadcrumbs({ rootName: "首頁" }), Component.ArticleTitle(), Component.ContentMeta()],
   left: [
     Component.PageTitle(),
     Component.MobileOnly(Component.Spacer()),

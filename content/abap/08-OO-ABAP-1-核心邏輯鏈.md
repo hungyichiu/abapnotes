@@ -1,5 +1,13 @@
 ---
 title: "OO ABAP 核心邏輯鏈"
+description: "從 Procedural ABAP 資料無歸屬、邏輯無邊界、只能複製貼上三個問題出發，串起 Class、Inheritance、Interface、Abstract Class、Exception 等七層概念，再對照 SOLID 與設計模式，學 OO ABAP 前先看這張地圖。"
+keywords:
+  - OO ABAP
+  - 物件導向 ABAP
+  - Class 與 Interface
+  - Abstract Class
+  - ABAP 設計模式
+  - Exception Class
 tags:
   - ABAP
   - OOP
@@ -7,7 +15,7 @@ tags:
 created: 2026-07-14
 status: active
 area: public
-publish: true
+publish: false
 ---
 
 > OO ABAP 系列第 1 篇，共 8 篇：本篇：核心邏輯鏈 → [[08-OO-ABAP-2-命名規則|下一篇：命名規則]]

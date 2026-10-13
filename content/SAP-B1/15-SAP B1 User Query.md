@@ -1,5 +1,12 @@
 ---
 title: SAP B1 User Query：從查詢報表到 FMS 到核決觸發
+description: "整理 SAP B1 User Query 三種用法：查詢報表（OUQR）、FMS 的 $[...] 動態語法與 CSHS 掛載盤點、核准範本觸發條件（回傳 TRUE），接手舊系統或設定核准流程時照這份查。"
+keywords:
+  - SAP B1 User Query
+  - FMS 格式化搜尋
+  - 核准範本觸發條件
+  - OUQR CSHS
+  - 動態語法
 tags:
   - SAP
   - B1
@@ -7,7 +14,7 @@ tags:
 created: 2026-03-21
 status: active
 area: public
-publish: true
+publish: false
 source:
   - "[[B1-User Query]]"
   - "[[B1-20250814-如何找出SAP B1 FMS掛載的位置]]"

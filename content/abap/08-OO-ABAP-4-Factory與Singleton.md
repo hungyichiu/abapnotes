@@ -1,5 +1,12 @@
 ---
 title: "設計模式：Factory + Singleton"
+description: "整理 Factory 與 Singleton：用 zcl_document_factory 依文件類型建立發票或折讓單，以 PRIVATE constructor 加 CLASS-DATA 實作單例，並以 CL_SALV_TABLE=>factory 當 SAP 標準案例，決定何時用哪個模式。"
+keywords:
+  - ABAP Factory Pattern
+  - ABAP Singleton
+  - CL_SALV_TABLE factory
+  - get_instance
+  - 物件建立模式
 tags:
   - ABAP
   - OOP
@@ -7,7 +14,7 @@ tags:
 created: 2026-07-14
 status: active
 area: public
-publish: true
+publish: false
 ---
 
 > OO ABAP 系列第 4 篇，共 8 篇：[[08-OO-ABAP-3-SOLID原則|上一篇：SOLID 原則]] → 本篇：Factory 與 Singleton → [[08-OO-ABAP-5-Strategy與Observer|下一篇：Strategy 與 Observer]]

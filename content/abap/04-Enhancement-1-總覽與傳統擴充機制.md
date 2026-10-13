@@ -1,5 +1,12 @@
 ---
 title: "Enhancement 總覽與傳統擴充機制：User Exit 與 Customer Exit"
+description: "Enhancement 系列第 1 篇，整理四個世代的擴充機制，並詳述 User Exit（MV45AFZZ）與 Customer Exit（SMOD、CMOD）的找法與啟用，附四種找擴充點的方法，接手舊程式時照這份查。"
+keywords:
+  - SAP Enhancement
+  - User Exit
+  - Customer Exit
+  - SMOD CMOD
+  - MV45AFZZ
 tags:
   - SAP
   - ABAP
@@ -7,7 +14,7 @@ tags:
 created: 2026-05-15
 status: active
 area: public
-publish: true
+publish: false
 source:
   - "[[ABAP-學習-開發核心：RICEFW 學習路徑指南]]"
   - "[[ABAP-課程-4. Modularization Tech]]"

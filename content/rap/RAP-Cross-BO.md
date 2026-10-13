@@ -1,5 +1,12 @@
 ---
 title: "RAP 跨商務物件互動 (Cross-BO Interaction)"
+description: "整理 RAP 跨 BO 互動的 Create-by-Association、Link／Unlink action，以及 Collaborative 與 Exclusive 兩種 Draft Scope 的配置規則和 draft determine action，設計跨物件草稿前先確認。"
+keywords:
+  - RAP 跨 BO 互動
+  - Cross-BO Draft
+  - Draft Scope
+  - draft determine action
+  - Link Unlink action
 tags:
   - ABAP
   - RAP
@@ -7,7 +14,7 @@ tags:
 created: 2026-05-07
 status: active
 area: public
-publish: true
+publish: false
 ---
 
 ## 為什麼需要跨 BO 互動

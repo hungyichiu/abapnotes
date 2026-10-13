@@ -1,15 +1,20 @@
 ---
-title: Claude Code CLI — WSL / PowerShell / CMD 環境比較與 Alias 設定
+title: "Claude Code CLI：WSL、PowerShell、CMD 環境比較與 Alias 設定"
+description: "比較 Claude Code 在 WSL、PowerShell、CMD 的設定檔位置、路徑寫法與 Unicode 支援，並整理 ~/.bashrc、$PROFILE、doskey 的 alias 設定與常用指令，在 Windows 選殼層前先對照。"
+keywords:
+  - Claude Code CLI
+  - WSL PowerShell CMD
+  - Claude Code alias
+  - $PROFILE
+  - doskey
 tags:
-  - claude-code
-  - wsl
-  - powershell
-  - cli
-  - tools
+  - Claude-Code
+  - WSL
+  - PowerShell
 created: 2026-06-05
 status: active
 area: public
-publish: true
+publish: false
 source:
   - "[[工具-Obsidian-20250806-obsidian-plugins]]"
   - "[[工具-AI-LLM]]"

@@ -6,7 +6,7 @@ tags:
 created: 2026-07-16
 status: active
 area: public
-publish: true
+publish: false
 source: "[[ABAP-課程-7. Module Pool Programming 1-49]]"
 description: 整理 ABAP Table Control 的 Flow Logic、Tab Strip、LOOP AT SCREEN 動態欄位、下拉選單依上層欄位動態篩選（VRM_SET_VALUES）、F4/F1 Help 客製化，附程式碼範例。
 keywords:

@@ -1,5 +1,12 @@
 ---
 title: "設計模式：Strategy + Observer"
+description: "整理 Strategy 與 Observer：用 zif_pricing_strategy 注入 VIP 與季節折扣，用 zif_order_observer 在訂單確認時通知寄信與庫存，再以 cl_gui_alv_grid 的 double_click 事件當 SAP 案例，選模式前先分清差異。"
+keywords:
+  - ABAP Strategy Pattern
+  - ABAP Observer Pattern
+  - SET HANDLER
+  - cl_gui_alv_grid 事件
+  - 多型
 tags:
   - ABAP
   - OOP
@@ -7,7 +14,7 @@ tags:
 created: 2026-07-14
 status: active
 area: public
-publish: true
+publish: false
 ---
 
 > OO ABAP 系列第 5 篇，共 8 篇：[[08-OO-ABAP-4-Factory與Singleton|上一篇：Factory 與 Singleton]] → 本篇：Strategy 與 Observer → [[08-OO-ABAP-6-TemplateMethod與Facade|下一篇：Template Method 與 Facade]]

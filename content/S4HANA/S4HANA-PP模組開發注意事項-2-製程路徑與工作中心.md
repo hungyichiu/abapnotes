@@ -7,7 +7,7 @@ tags:
 created: 2026-07-16
 status: active
 area: public
-publish: true
+publish: false
 source: "[[S4H-PP-Tables]]"
 description: 說明 S/4HANA 製程路徑（Routing）與工作中心的資料表結構（PLKO/PLPO/PLMZ、CRHD），對照 BOM 的分工與 B1 完全沒有的產能排程概念。
 keywords:

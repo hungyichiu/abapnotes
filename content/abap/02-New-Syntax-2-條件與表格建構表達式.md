@@ -1,5 +1,12 @@
 ---
-title: "New Syntax:條件與表格建構表達式"
+title: "New Syntax：條件與表格建構表達式"
+description: "New Syntax 系列第 2 篇，整理 COND、SWITCH、VALUE、FILTER 四個表達式如何取代 IF、CASE 與逐筆 APPEND，並說明 FILTER 需要 Sorted、Hashed Table 或 Secondary Key 的限制。"
+keywords:
+  - ABAP COND SWITCH
+  - VALUE 表達式
+  - FILTER
+  - ABAP New Syntax
+  - Secondary Key
 tags:
   - SAP
   - ABAP
@@ -7,17 +14,17 @@ tags:
 created: 2026-05-15
 status: active
 area: public
-publish: true
+publish: false
 source:
   - "[[ABAP-語法-COND Statement As a Replacement of IF Statement]]"
   - "[[ABAP-語法-NEW SYNTAX]]"
 ---
 
-> 本篇是「New Syntax」系列第 2 篇,共 3 篇:[[02-New-Syntax-1-資料宣告與迴圈|資料宣告與迴圈]] → 條件與表格建構表達式(本篇)→ [[02-New-Syntax-3-進階表格與物件操作|進階表格與物件操作]]
+> 本篇是「New Syntax」系列第 2 篇，共 3 篇:[[02-New-Syntax-1-資料宣告與迴圈|資料宣告與迴圈]] → 條件與表格建構表達式(本篇)→ [[02-New-Syntax-3-進階表格與物件操作|進階表格與物件操作]]
 
 ## 為什麼需要表達式語法
 
-上一篇的 `DATA(...)` 讓宣告變數不需要事先寫型別,但舊語法的 `IF/ELSEIF`、`CASE`、逐筆 `APPEND` 賦值仍然需要「先宣告一個空變數,再用好幾行邏輯填值」。本篇的 `COND`、`SWITCH`、`VALUE`、`FILTER` 這四個表達式,讓「判斷/篩選」跟「賦值」合併成一個運算式,通常可以直接寫在 `DATA(...)` 右邊,不需要臨時變數。
+上一篇的 `DATA(...)` 讓宣告變數不需要事先寫型別，但舊語法的 `IF/ELSEIF`、`CASE`、逐筆 `APPEND` 賦值仍然需要「先宣告一個空變數，再用好幾行邏輯填值」。本篇的 `COND`、`SWITCH`、`VALUE`、`FILTER` 這四個表達式，讓「判斷/篩選」跟「賦值」合併成一個運算式，通常可以直接寫在 `DATA(...)` 右邊，不需要臨時變數。
 
 ---
 
@@ -43,7 +50,7 @@ DATA(lv_status) = COND string(
   ELSE                        '一般' ).
 ```
 
-COND 可以直接放在 `EXPORTING`、`APPEND`、`INSERT` 等語句中,不需要事先宣告臨時變數。
+COND 可以直接放在 `EXPORTING`、`APPEND`、`INSERT` 等語句中，不需要事先宣告臨時變數。
 
 ---
 

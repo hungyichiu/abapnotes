@@ -1,12 +1,19 @@
 ---
 title: "SAP B1 授權管理：識別碼查詢、更新流程與故障排除"
+description: "整理 SAP B1 授權的安裝號碼、系統號碼、硬體碼查詢，經 LCC 與 SLD 更新授權的七步流程、授權類型與測試授權展延，授權到期或更新後無法登入時照這份排查。"
+keywords:
+  - SAP B1 授權管理
+  - LCC License Control Center
+  - Hardware Key
+  - SLD
+  - License Service
 tags:
   - SAP
   - B1
 created: 2026-03-31
 status: active
 area: public
-publish: true
+publish: false
 source:
   - "[[B1-Chris筆電_申請SAP B1授權]]"
   - "[[B1-20251013-如何排除更新授權後卻無法登入B1的情況]]"

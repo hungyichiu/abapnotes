@@ -1,5 +1,12 @@
 ---
 title: "ABAP Editor（SE38）Cheat Sheet"
+description: "整理 SE38 編輯器的 Editor Options 推薦設定（等寬字型、Code Completion、Code Template）、Version Management 版本比對、SE80 建立 Z 開頭 T-Code，以及 Ctrl+F3、Ctrl+F2、Shift+F1 等快速鍵，開發前先把編輯環境設好。"
+keywords:
+  - SE38 Cheat Sheet
+  - ABAP Editor 設定
+  - Version Management
+  - SE80 建立 T-Code
+  - ABAP 快速鍵
 tags:
   - SAP
   - ABAP
@@ -8,7 +15,7 @@ tags:
 created: 2026-05-14
 status: active
 area: public
-publish: true
+publish: false
 ---
 
 > SE38 是 ABAP 開發的主要入口，涵蓋程式碼編輯、版本管理與 T-Code 建立。

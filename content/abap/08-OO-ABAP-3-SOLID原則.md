@@ -1,5 +1,13 @@
 ---
 title: "SOLID 原則"
+description: "用 zcl_order 塞滿列印、存檔、寄信的反例，逐條說明 SOLID 五原則在 ABAP 的寫法：拆 Class、用 Interface 取代 CASE 擴充折扣類型、草稿繼承列印文件的 LSP 違規、拆小 Interface，以及用建構子注入 zif_mailer 的依賴反轉，設計 Class 時照這份檢查。"
+keywords:
+  - SOLID 原則
+  - ABAP 依賴注入
+  - 單一職責
+  - 開放封閉原則
+  - Interface Segregation
+  - 依賴反轉
 tags:
   - ABAP
   - OOP
@@ -7,7 +15,7 @@ tags:
 created: 2026-07-14
 status: active
 area: public
-publish: true
+publish: false
 ---
 
 > OO ABAP 系列第 3 篇，共 8 篇：[[08-OO-ABAP-2-命名規則|上一篇：命名規則]] → 本篇：SOLID 原則 → [[08-OO-ABAP-4-Factory與Singleton|下一篇：Factory 與 Singleton]]

@@ -7,7 +7,7 @@ tags:
 created: 2026-07-16
 status: active
 area: public
-publish: true
+publish: false
 source: "[[S4H-MM-Tables]]"
 description: 拆解 S/4HANA MM 模組的採購資料表與 EKBE 歷史追蹤表判讀邏輯（VGABE/SHKZG/BWART），對照 B1 採購單據鏈的差異，掌握開發時的關聯 Key 與效能注意事項。
 keywords:
