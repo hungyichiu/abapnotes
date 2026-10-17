@@ -35,7 +35,15 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
 
       // Display reading time if enabled
       if (options.showReadingTime) {
-        const { minutes, words: _words } = readingTime(text)
+        // reading-time 把每個中文字當成一個英文單字（每分鐘 200 字），中文會多算一倍以上；
+        // 中文字另外用每分鐘 450 字算，其餘文字照 reading-time
+        const cjkPattern = /[㐀-鿿豈-﫿]/g
+        const cjkCount = (text.match(cjkPattern) ?? []).length
+        // 全形標點不去掉的話，會被 reading-time 一個個當成單字
+        const { minutes: otherMinutes } = readingTime(
+          text.replace(cjkPattern, " ").replace(/[　-〿＀-￯]/g, " "),
+        )
+        const minutes = cjkCount / 450 + otherMinutes
         const displayedTime = i18n(cfg.locale).components.contentMeta.readingTime({
           minutes: Math.ceil(minutes),
         })

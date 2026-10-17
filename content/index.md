@@ -21,5 +21,6 @@ pin: true
 ### AI 與 ABAP
 
 - [[ai-without-outsourcing-thinking|用 AI 學 ABAP 但不外包思考：四個階段，三個轉折]]
+- [[program-handover-externalization|我怎麼不變成下一個離職同仁：接手沒文件的程式之後，我做的四層外部化]]
 
 舊文章正在逐篇重新審閱，確認過的會陸續放回來。
