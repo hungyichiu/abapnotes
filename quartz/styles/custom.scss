@@ -178,6 +178,25 @@ input:focus-visible {
   margin: 0.4rem 0 1.2rem;
 }
 
+// 個人標語：中英兩行，放在大標底下當副標
+.home-hero p.home-tagline {
+  font-family: var(--headerFont);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--dark);
+  margin: -0.4rem 0 1.4rem;
+  padding-left: 0.8rem;
+  border-left: 3px solid var(--secondary);
+
+  span {
+    font-family: var(--bodyFont);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--gray);
+  }
+}
+
 .home-hero p {
   font-size: 1.1rem;
   line-height: 1.8;

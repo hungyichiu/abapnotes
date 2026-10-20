@@ -12,6 +12,8 @@ pin: true
 
 # 從 B1 顧問到 ABAP 開發
 
+<p class="home-tagline">複雜存系統，簡單予眾人。<br><span lang="en">Complex inside, simple outside.</span></p>
+
 做過 SAP Business One 的導入與客製，現在寫 S/4HANA 的 ABAP。這裡記的是兩邊都用得上的東西：B1 怎麼落地、S/4HANA 的資料表怎麼看、ABAP 怎麼寫得乾淨。
 
 </div>
