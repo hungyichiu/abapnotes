@@ -1,5 +1,14 @@
 @use "./base.scss";
 
+// 面板色（程式碼區塊、行內 code）：Quartz 的 theme 沒有這一格，自己補
+:root {
+  --panel: #f2f2f2;
+}
+
+:root[saved-theme="dark"] {
+  --panel: #1e1e1e;
+}
+
 // ---------------------------------------------------------------
 // 字級與行高：中文內文行高要比拉丁文高，1.8 左右讀起來才不擠
 // ---------------------------------------------------------------
@@ -76,7 +85,7 @@ article a.internal:not(.tag-link),
   line-height: inherit;
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-decoration-color: color-mix(in srgb, var(--secondary) 40%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--secondary) 60%, transparent);
   text-underline-offset: 0.2em;
   transition: text-decoration-color 0.15s ease, color 0.15s ease;
 
@@ -88,8 +97,25 @@ article a.internal:not(.tag-link),
 article a.external {
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-decoration-color: color-mix(in srgb, var(--secondary) 40%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--secondary) 60%, transparent);
   text-underline-offset: 0.2em;
+}
+
+// 淺色模式：橘字在白底只有 2.9:1，內文連結字維持黑色、改用粗橘底線標示，滑過才變橘
+:root[saved-theme="light"] {
+  article a.internal:not(.tag-link),
+  article a.external,
+  .backlinks a.internal,
+  .prevnext a.internal {
+    color: var(--dark);
+    font-weight: 500;
+    text-decoration-thickness: 2px;
+    text-decoration-color: var(--secondary);
+
+    &:hover {
+      color: var(--tertiary);
+    }
+  }
 }
 
 .tags .tag-link {
@@ -112,16 +138,13 @@ article a.external {
   border: 1px solid var(--lightgray);
 }
 
-.shiki.light-plus {
-  background-color: #ffffff !important;
-}
-
+.shiki.light-plus,
 :root[saved-theme="dark"] .shiki.dark-plus {
-  background-color: #1e1e1e !important;
+  background-color: var(--panel) !important;
 }
 
 :not(pre) > code {
-  background-color: var(--lightgray);
+  background-color: var(--panel);
   padding: 0.15em 0.35em;
   border-radius: 3px;
   font-size: 0.85em;
@@ -175,7 +198,7 @@ input:focus-visible {
 }
 
 .home-track {
-  border-top: 2px solid var(--dark);
+  border-top: 2px solid var(--secondary);
   padding-top: 0.7rem;
 
   h3 {
@@ -198,5 +221,15 @@ input:focus-visible {
     a {
       white-space: nowrap;
     }
+  }
+}
+
+// ---------------------------------------------------------------
+// 淺色模式的小字橘色：#ff6b00 在白底讀不清楚，標籤和麵包屑改用深一階的橘
+// ---------------------------------------------------------------
+:root[saved-theme="light"] {
+  .tags .tag-link,
+  .breadcrumb-element a {
+    color: var(--tertiary);
   }
 }
