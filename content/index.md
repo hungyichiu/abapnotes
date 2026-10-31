@@ -25,4 +25,16 @@ pin: true
 - [[ai-without-outsourcing-thinking|用 AI 學 ABAP 但不外包思考：四個階段，三個轉折]]
 - [[program-handover-externalization|我怎麼不變成下一個離職同仁：接手沒文件的程式之後，我做的四層外部化]]
 
+### ABAP
+
+- [[03-Smartforms|Smart Forms：採購單批次列印與 control_parameters]]
+- [[Module-Pool-基礎-對話框設計|Module Pool 基礎：PBO／PAI 與對話框設計]]
+- [[Module-Pool-進階-TableControl與動態篩選|Module Pool 進階：Table Control 與動態篩選]]
+
+### SAP Business One
+
+- [[16-SQL預存程序-卡控與自動化|SAP B1 預存程序卡控：用 TransactionNotification 擋下不合規的資料]]
+- [[24-如何設計核准範本|SAP B1 核准範本盤點：用 SQL 查出每個核准階段由誰負責]]
+- [[25-SAP-B1-授權管理|SAP B1 授權管理：識別碼查詢、更新流程與故障排除]]
+
 舊文章正在逐篇重新審閱，確認過的會陸續放回來。

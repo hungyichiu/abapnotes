@@ -6,11 +6,12 @@ tags:
 created: 2026-07-16
 status: active
 area: public
-publish: false
+publish: true
 source: "[[ABAP-課程-7. Module Pool Programming 1-49]]"
-description: 整理 ABAP Table Control 的 Flow Logic、Tab Strip、LOOP AT SCREEN 動態欄位、下拉選單依上層欄位動態篩選（VRM_SET_VALUES）、F4/F1 Help 客製化，附程式碼範例。
+description: 整理 ABAP Module Pool 進階畫面：Table Control 的 LOOP WITH CONTROL 與捲軸設定、Tab Strip、LOOP AT SCREEN 動態欄位、VRM_SET_VALUES 連動下拉選單、F4/F1 Help 客製化，照抄程式碼前先看這幾個坑。
 keywords:
   - ABAP Table Control
+  - Module Pool
   - Tab Strip
   - VRM_SET_VALUES
   - F4 Help
@@ -19,7 +20,7 @@ keywords:
 
 ## 前言
 
-搞懂 [[Module-Pool-基礎-對話框設計|PBO/PAI 這組基礎事件]]後，實務上的 Module Pool 開發多半會碰到更複雜的畫面需求：一次顯示多筆資料、依條件動態隱藏欄位、下拉選單要依上層欄位動態篩選。
+搞懂 [[Module-Pool-基礎-對話框設計|PBO/PAI 這組基礎事件]]後，實務上的 ABAP Module Pool 開發多半會碰到更複雜的畫面需求：一次顯示多筆資料、依條件動態隱藏欄位、下拉選單要依上層欄位動態篩選。
 
 這篇整理 Table Control、Tab Strip、動態欄位屬性、動態篩選的下拉選單、F4/F1 Help 這幾個進階應用。
 
@@ -41,12 +42,17 @@ Table Control 讓一個畫面欄位區塊可以顯示多筆資料列，而不是
 - **Work Area**：單筆資料的工作區（如 `LS_DATA1`）
 - **欄位對應**：Table Control 裡每一欄要對應到 Work Area 的哪個欄位
 
-Wizard 填完只是把畫面元件和變數對起來，多筆資料要真的顯示出來、改完要寫回內表，靠的是 Flow Logic 裡 PBO 和 PAI 各一組 `LOOP … WITH CONTROL`：
+Wizard 填完只是把畫面元件和變數對起來，多筆資料要真的顯示出來、改完要寫回內表，靠的是 Flow Logic 裡 PBO 和 PAI 各一組 `LOOP … WITH CONTROL`。
+
+**程式的 TOP include：宣告 Table Control**（Wizard 會自動產生）
 
 ```abap
-" 程式裡要先宣告 Table Control（Wizard 會自動產生）
 CONTROLS tc_data1 TYPE TABLEVIEW USING SCREEN 0100.
+```
 
+**畫面 0100 的 Flow Logic**
+
+```abap
 PROCESS BEFORE OUTPUT.
   MODULE status_0100.
   LOOP AT lt_data1 INTO ls_data1
@@ -61,20 +67,29 @@ PROCESS AFTER INPUT.
   MODULE user_command_0100.
 ```
 
+**程式裡的 MODULE**
+
 ```abap
+MODULE status_0100 OUTPUT.
+  SET PF-STATUS 'MAIN'.
+  tc_data1-lines = lines( lt_data1 ).   " 告訴 Table Control 總共幾列，垂直捲軸才會出現
+ENDMODULE.
+
 MODULE modify_data1 INPUT.
   MODIFY lt_data1 FROM ls_data1 INDEX tc_data1-current_line.
 ENDMODULE.
 ```
 
-PBO 的 `LOOP` 把內表一列一列填進畫面列，PAI 的 `LOOP` 把畫面列一列一列寫回內表。少了 PBO 那組，畫面是空的；少了 PAI 那組，使用者改的值不會回到內表。
+PBO 的 `LOOP` 把內表一列一列填進畫面列，PAI 的 `LOOP` 把畫面列一列一列寫回內表。Table Control 的 PBO 和 PAI 都一定要有 `LOOP`，少一邊畫面就無法啟用。
+
+`tc_data1-lines` 沒設的話，資料超過一頁時捲不下去。`lines( )` 是 ABAP 7.40 以後的寫法，舊系統改用 `DESCRIBE TABLE lt_data1 LINES tc_data1-lines.`。
 
 明細資料本身通常在進入這個畫面前就撈好，搭配 `FOR ALL ENTRIES` 一次撈出所有明細：
 
 ```abap
 IF lt_data IS NOT INITIAL.
   SELECT ono oin odesc icost
-    FROM zordi_28
+    FROM zorder_item
     INTO TABLE lt_data1
     FOR ALL ENTRIES IN lt_data
     WHERE ono = lt_data-ono.
@@ -85,7 +100,7 @@ ENDIF.
 
 ## Tab Strip：分頁畫面
 
-Tab Strip 是指分頁式的畫面元件，每個分頁（Tab）底層對應一個獨立的 Subscreen。
+一個畫面塞不下、要分頁切換時，用 Tab Strip。每個分頁（Tab）底層對應一個獨立的 Subscreen。
 
 用 Screen Painter 的 Tabstrip Wizard 建立時，SAP 會自動幫每個分頁產生對應的 Subscreen 區域和切換邏輯，開發者只要把邏輯寫進各自的 Subscreen 就好。
 
@@ -98,8 +113,8 @@ Tab Strip 是指分頁式的畫面元件，每個分頁（Tab）底層對應一�
 ```abap
 MODULE status_0100 OUTPUT.
   LOOP AT SCREEN.
-    IF screen-name = 'ZORDH_28-ODATE' OR screen-name = 'ZORDH_28-PM'
-    OR screen-name = 'ZORDH_28-TA' OR screen-name = 'ZORDH_28-CURR'.
+    IF screen-name = 'ZORDER-ODATE' OR screen-name = 'ZORDER-PM'
+    OR screen-name = 'ZORDER-TA' OR screen-name = 'ZORDER-CURR'.
       screen-input = 0.
       MODIFY SCREEN.
     ENDIF.
@@ -120,13 +135,16 @@ ENDMODULE.
 
 **做法二：`VRM_SET_VALUES` 動態篩選**
 
-如果下拉選項要依查詢結果或上層欄位動態變化（例如選了「州」之後，「地區」的選項要跟著篩選），就要在 PBO 用 `VRM_SET_VALUES` 動態塞值：
+如果下拉選項要依查詢結果或上層欄位動態變化（例如選了「州」之後，「地區」的選項要跟著篩選），就要在 PBO 用 `VRM_SET_VALUES` 動態塞值。
+
+上層欄位（州）的 Listbox 要在 Screen Painter 設一個 Function Code（FctCode）。沒設的話，使用者選了州不會觸發 PAI，下層的選項就不會更新。
 
 ```abap
 DATA: lt_values  TYPE vrm_values,
       lwa_values TYPE vrm_value.
 
-LOOP AT lt_data INTO lwa_data.
+CLEAR lt_values.
+LOOP AT lt_data INTO lwa_data WHERE state = ztstate_region-state.   " 只留上層選到的州
   lwa_values-key  = lwa_data-region.
   lwa_values-text = lwa_data-region.
   APPEND lwa_values TO lt_values.
@@ -141,7 +159,7 @@ CALL FUNCTION 'VRM_SET_VALUES'
 
 實作時有三個常見的坑。
 
-- 忘記 `REFRESH lt_values`，選項一直疊加。
+- 忘記先清空 `lt_values`，選項一直疊加。
 - 切換上層欄位後忘記 `CLEAR` 下層欄位，殘留舊值。
 - `id` 參數打錯，要精確對到畫面上的 `表名-欄位名`。
 
@@ -213,13 +231,13 @@ ENDMODULE.
 
 ```abap
 IF r1 = 'X'.
-  LEAVE TO TRANSACTION 'ZTC1_28'.   " ZTCn_28 是課程環境的 T-Code，換成你自己的
+  LEAVE TO TRANSACTION 'ZORDER_H'.   " 表頭維護
 ELSEIF r2 = 'X'.
-  LEAVE TO TRANSACTION 'ZTC2_28'.
+  LEAVE TO TRANSACTION 'ZORDER_I'.   " 明細維護
 ELSEIF r3 = 'X'.
-  LEAVE TO TRANSACTION 'ZTC3_28'.
+  LEAVE TO TRANSACTION 'ZORDER_Q'.   " 查詢
 ELSEIF r4 = 'X'.
-  LEAVE TO TRANSACTION 'ZTC4_28'.
+  LEAVE TO TRANSACTION 'ZORDER_R'.   " 報表
 ENDIF.
 ```
 
@@ -228,16 +246,14 @@ ENDIF.
 ## 【What For】開發時的實戰注意事項
 
 1. **Table Control 的 PBO 和 PAI 兩組 `LOOP` 都要有**。
-	- 畫面空白先查 PBO 那組，改的值沒回內表先查 PAI 那組。
+	- 少一邊畫面就無法啟用；改的值沒回內表，先查 PAI 那組的 `MODIFY`。
+	- 資料超過一頁捲不下去，先查 PBO 有沒有設 `tc_data1-lines`。
 2. **撈明細前先判斷表頭資料是否存在**。
 	- `FOR ALL ENTRIES` 遇到空的驅動表會撈出整張表。
 3. **`LOOP AT SCREEN` 修改屬性後一定要 `MODIFY SCREEN`**。
 	- 只改 `screen-input` 不呼叫 `MODIFY SCREEN`，畫面不會有任何變化。
 4. **F4/F1 Help 出問題，在按下 F4/F1 的當下開除錯器**。
 	- 看 `F4IF_INT_TABLE_VALUE_REQUEST`、`HELP_OBJECT_SHOW` 實際收到的參數值對不對。
-
-本文的程式碼是依標準用法整理，實際專案裡的寫法建議對照自己測試過的版本再確認一次。
-
 ---
 
 ## 常見問題

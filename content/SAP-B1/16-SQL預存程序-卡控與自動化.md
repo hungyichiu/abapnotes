@@ -1,5 +1,5 @@
 ---
-title: "SQL 預存程序在 SAP B1 中的應用：卡控與自動化"
+title: "SAP B1 預存程序卡控：用 TransactionNotification 擋下不合規的資料"
 description: "整理用 SBO_SP_TransactionNotification 掛載客製 SP 做資料卡控的方法：參數簽章、_CmSp_ 命名、錯誤碼慣例，附統編不可重複等四個案例與常見寫錯法，上線前對照檢查。"
 keywords:
   - SAP B1 預存程序
@@ -14,11 +14,10 @@ tags:
 created: 2026-03-23
 status: active
 area: public
-publish: false
+publish: true
 source:
   - "[[SQL-SP-預存程序]]"
   - "[[SQL-SP-How to check object type]]"
-  - "[[SQL-SP-擷發_資料卡控語法]]"
   - "[[SQL-掛載預存程序的注意事項]]"
   - "[[B1-20250829-如何在B1 中 呼叫SP]]"
 ---
@@ -30,6 +29,8 @@ SAP Business One 可以在使用者新增、修改或刪除資料的瞬間，用
 這不需要 Add-on，也不需要改 B1 原始碼。SAP 預留了一個內建預存程序 `SBO_SP_TransactionNotification`，每一筆交易存檔時都會被呼叫。顧問寫自己的客製 SP，在 `SBO_SP_TransactionNotification` 裡呼叫它，就能在 B1 的標準流程中插入業務規則驗證。
 
 本文說明這個機制的運作原理、撰寫規範、常見的實際案例，以及怎麼讓 B1 查詢直接呼叫 SP。
+
+本文的語法以 SQL Server 版 B1（T-SQL）為準。B1 on HANA 用的是 SQLScript，參數宣告、`EXEC`、`OBJECT_ID` 這些寫法都不同，不能照抄。
 
 ---
 
@@ -194,20 +195,25 @@ END
 ```sql
 IF (@object_type = '67' AND @transaction_type = 'A')
 BEGIN
-    DECLARE @UserSign INT;
-    SELECT @UserSign = UserSign FROM OWTR
-    WHERE DocEntry = @list_of_cols_val_tab_del;
-
-    IF @UserSign NOT IN (1, 57, 102)  -- 核准使用者的 UserSign
+    IF EXISTS (
+        SELECT 1
+        FROM OWTR T0
+        INNER JOIN WTR1 T1 ON T1.DocEntry = T0.DocEntry
+        WHERE T0.DocEntry = @list_of_cols_val_tab_del
+          AND T1.ItemCode IN ('A0001', 'A0002')   -- 管制物料
+          AND T0.UserSign NOT IN (1, 57, 102)     -- 核准使用者的 UserSign
+    )
     BEGIN
-        SELECT @error = 9990;
+        SELECT @error = 9998;
         SELECT @error_message = N'庫存調撥僅限倉管主管操作，請聯繫權限管理員。';
         RETURN;
     END;
 END
 ```
 
-`object_type = '67'` 對應庫存調撥單（OWTR）。`UserSign` 是 B1 使用者的內部識別碼，可從 `OUSR` 資料表查詢對應關係。
+`object_type = '67'` 對應庫存調撥單（OWTR），明細在 `WTR1`。只要調撥單裡有任何一行是管制物料，而建單的人不在名單裡，就擋下。
+
+`UserSign` 是 B1 使用者的內部識別碼，可從 `OUSR` 資料表查詢對應關係。管制物料多的話，與其把料號寫死在 `IN` 裡，可以改成判斷物料主檔的群組或自訂欄位。
 
 ### 案例三：AP 發票強制存草稿
 
@@ -222,7 +228,7 @@ BEGIN
           AND DocEntry = @list_of_cols_val_tab_del
     )
     BEGIN
-        SELECT @error = 9996;
+        SELECT @error = 9997;
         SELECT @error_message = N'非財務人員請將 AP 發票存成草稿，由財務審核後正式儲存。';
         RETURN;
     END;
@@ -238,13 +244,23 @@ END
 ```sql
 IF (@object_type = '4' AND @transaction_type IN ('A', 'U'))
 BEGIN
-    SELECT @error = 9997;
-    SELECT @error_message = N'物料主檔異動請洽財務部，謝謝。';
-    RETURN;
+    IF EXISTS (
+        SELECT 1 FROM OITM
+        WHERE ItemCode = @list_of_cols_val_tab_del
+          AND (   (@transaction_type = 'A' AND UserSign  NOT IN (1, 57))   -- 新增：看建立人
+               OR (@transaction_type = 'U' AND UserSign2 NOT IN (1, 57)))  -- 修改：看最後更新人
+    )
+    BEGIN
+        SELECT @error = 9996;
+        SELECT @error_message = N'物料主檔異動請洽財務部，謝謝。';
+        RETURN;
+    END;
 END
 ```
 
-這是最簡單的卡控用法：無條件阻擋特定類型的操作，常見於需要嚴格管控主檔資料品質的客戶。
+物料主檔傳進來的主鍵值是 `ItemCode`，不是 DocEntry。新增時看 `UserSign`（建立人），修改時要看 `UserSign2`（最後更新人），因為修改不會改到建立人。
+
+`(1, 57)` 換成財務部人員的 UserSign。
 
 ---
 
@@ -303,16 +319,9 @@ WHERE name = '_CmSp_DataValidation';
 
 ### 需要刪除並重建 SP
 
-修改已有 SP 時，建議使用標準的「先刪後建」框架，確保腳本可重複執行：
+修改已有的 SP，用前面「標準框架」的先刪後建寫法，腳本就能重複執行。
 
-```sql
-IF OBJECT_ID('[dbo].[_CmSp_DataValidation]', 'P') IS NOT NULL
-BEGIN
-    DROP PROCEDURE [dbo].[_CmSp_DataValidation];
-END;
-GO
--- 接著執行 CREATE PROCEDURE ...
-```
+SQL Server 2016 SP1 以後也可以直接寫 `CREATE OR ALTER PROCEDURE`，不用先 DROP。
 
 ---
 
@@ -322,7 +331,7 @@ GO
 	- B1 傳入的主鍵值是 `nvarchar`，要和數值欄位比較就明確轉型，例如 `CAST(@list_of_cols_val_tab_del AS INT)`。
 2. **沒有檢查 `@transaction_type`**。
 	- 只寫 `@object_type` 的條件，刪除、取消也會被同一條規則攔下，常見症狀是使用者刪不掉草稿。
-3. **`@list_of_cols_val_tab_del` 對業務夥伴是 CardCode，對單據是 DocEntry**。
+3. **`@list_of_cols_val_tab_del` 對業務夥伴是 CardCode，對物料是 ItemCode，對單據是 DocEntry**。
 	- 每種物件的主鍵不一樣，先確認再比對，案例一的錯法就是這個。
 4. **`SELECT @error = …` 和 `SET @error = …` 都可以**。
 	- SAP 範本用 `SELECT` 是慣例，一行能同時設兩個變數；不是 B1 只認 `SELECT`。
@@ -341,3 +350,13 @@ GO
 	- `@error_message` 是使用者唯一看到的提示，寫「什麼情況不允許」和「該怎麼做」，不要只寫「錯誤」。
 - **和 FMS 分工**。
 	- FMS 負責輸入時自動帶值，SP 負責儲存前驗證規則，兩者都不用 Add-on 授權。
+
+---
+
+## 常見問題
+
+**SAP B1 怎麼在存檔時擋下不合規的資料？**
+在 SQL Server 寫一支客製 SP 檢查規則，再到 `SBO_SP_TransactionNotification` 的 `ADD YOUR CODE HERE` 段落用 `EXEC` 呼叫它。規則不通過就把 `@error` 設成非 0、`@error_message` 寫提示，B1 會取消這次存檔並顯示訊息。
+
+**卡控 SP 為什麼擋錯資料，或完全沒作用？**
+最常見的原因是 `@list_of_cols_val_tab_del` 拿錯了比對對象：它是主鍵值，業務夥伴是 CardCode、物料是 ItemCode、單據是 DocEntry。其次是沒檢查 `@transaction_type`，連刪除、取消都被擋。

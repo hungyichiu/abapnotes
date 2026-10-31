@@ -1,11 +1,11 @@
 ---
 title: ABAP
-description: ABAP 開發筆記：Classic ALV、New Syntax、Enhancement、OO ABAP、Module Pool 與除錯技巧。
+description: ABAP 開發筆記：Module Pool 畫面程式與 Smart Forms 批次列印，其他主題整理中。
 tags: []
 created: 2026-10-11
 status: active
 area: public
-publish: false
+publish: true
 ---
 
-ABAP 開發筆記：Classic ALV、New Syntax、Enhancement、OO ABAP、Module Pool 與除錯技巧。
+ABAP 開發筆記：Module Pool 畫面程式與 Smart Forms 批次列印，其他主題整理中。

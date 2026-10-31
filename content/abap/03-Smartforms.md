@@ -14,7 +14,7 @@ tags:
 created: 2026-05-15
 status: active
 area: public
-publish: false
+publish: true
 source:
   - "[[ABAP-可重用開發技巧 - PO Print 案例]]"
   - "[[ABAP-課程-12. Smartforms]]"
@@ -24,7 +24,7 @@ source:
 
 單次列印一份文件時，Smart Forms 的預設行為已經足夠。但實務上常需要一次列印上百份採購單。不特別處理的話，每份文件都會各自產生一個獨立 Spool Job，使用者得在列印佇列裡逐一放行。
 
-這篇整理的重點是怎麼透過 `control_parameters` 讓整批文件合併成單一 Spool Job，並避開其中的資料準備陷阱。
+這篇整理 Smart Forms 批次列印的做法：怎麼透過 `control_parameters` 讓整批文件合併成單一 Spool Job，並避開其中的資料準備陷阱。
 
 ---
 
@@ -42,13 +42,13 @@ Smart Forms 的開發分為兩層，這個分層是理解所有後續技巧的�
 
 Smart Forms 本身不會直接執行。系統在 Activate 時，會根據 Form 定義**自動產生一個 Function Module**，驅動程式呼叫這個 FM 完成列印。
 
-這個設計讓版面設計和程式邏輯完全分離，設計師和開發者可以各自工作。
+這個設計讓版面和程式邏輯分開：只調版面不用動驅動程式，但 Form Interface 的參數改了，兩邊要一起改。
 
 ---
 
-## 第一步：動態取得 Function Module 名稱
+## 動態取得 Function Module 名稱
 
-Smart Forms 產生的 Function Module 名稱由系統決定，格式類似 `/1BCDWB/SF00000123`，**不能寫死在程式裡**。每個系統環境（DEV、QA、PRD）產生的名稱都不同。
+Smart Forms 產生的 Function Module 名稱由系統決定，格式類似 `/1BCDWB/SF00000123`，**不能寫死在程式裡**。每個系統環境（DEV、QA、PRD）是在啟用時各自產生名稱，可能不同，沒辦法保證一樣。
 
 正確做法是用 `SSF_FUNCTION_MODULE_NAME` 取得名稱，再動態呼叫：
 
@@ -76,7 +76,9 @@ CALL FUNCTION lv_fname
   EXPORTING ...
 ```
 
-**錯誤轉拋模式**：呼叫 FM 失敗後，直接把系統變數 `sy-msgid`、`sy-msgty`、`sy-msgno`、`sy-msgv1~v4` 整包傳給 `MESSAGE`，不需要另外翻譯錯誤內容。這是 SAP 標準的錯誤處理慣例，所有 Function Module 呼叫失敗後都可以這樣寫。
+**錯誤轉拋模式**：呼叫 FM 失敗後，直接把系統變數 `sy-msgid`、`sy-msgty`、`sy-msgno`、`sy-msgv1~v4` 整包傳給 `MESSAGE`，不需要另外翻譯錯誤內容。
+
+這招只在 FM 用 `MESSAGE ... RAISING` 丟例外時有效，這時系統訊息欄位才有值。FM 若只用單純的 `RAISE`，`sy-msgid` 可能是空的或是上一則訊息，顯示出來的內容會是錯的。不確定的話，先判斷 `sy-msgid` 有沒有值，沒有就自己寫錯誤訊息。
 
 ---
 
@@ -167,6 +169,7 @@ LOOP AT gt_header INTO ls_header.
   LOOP AT gt_all_items INTO ls_item WHERE ebeln = ls_header-ebeln.
     APPEND ls_item TO lt_items.
   ENDLOOP.
+  " 接著呼叫 lv_fname，同上
 ENDLOOP.
 ```
 
@@ -202,6 +205,7 @@ FORM print_smartform.
   " Step 2：設定列印選項（靜默列印、不顯示對話框）
   ls_ctrl_para-no_dialog = 'X'.
   ls_ctrl_para-preview   = ' '.  " 批次列印不需要預覽
+  ls_opt-tddest          = 'LP01'. " 印表機，換成實際的輸出設備
 
   " Step 3：批次列印，所有文件合併為單一 spool job
   SORT gt_header BY ebeln.
@@ -241,6 +245,10 @@ ENDFORM.
 
 ---
 
+`no_dialog = 'X'` 會跳過列印對話框，使用者沒機會選印表機，所以 `ls_opt-tddest` 一定要填。沒填又碰上使用者主檔沒設預設印表機，會出錯或印不出來。
+
+---
+
 ## 常見陷阱
 
 **陷阱一：寫死 Smart Forms FM 名稱**
@@ -259,4 +267,14 @@ ENDFORM.
 
 **陷阱四：Smart Forms 結構與 TABLES 參數型別不符**
 
-Smart Forms FM 的 TABLES 參數型別由 Form 設計時決定。若驅動程式傳入的 `lt_items` 型別與 Form 設計的不一致，會有 runtime error。確認方式：在 SE37 查看動態產生的 FM 定義，比對 TABLES 參數的型別。
+Smart Forms FM 的 TABLES 參數型別由 Form 設計時決定。若驅動程式傳入的 `lt_items` 型別與 Form 設計的不一致，執行時會 dump，ST22 看到的通常是 `CALL_FUNCTION_CONFLICT_TYPE`。確認方式：在 SE37 查看動態產生的 FM 定義，比對 TABLES 參數的型別。
+
+---
+
+## 常見問題
+
+**Smart Forms 批次列印怎麼合併成一個 Spool Job？**
+在 LOOP 裡呼叫 Smart Forms 的 FM 時，把 `control_parameters` 的 `no_open`、`no_close` 預設設成 `X`，再用 `AT FIRST` 清掉 `no_open`、`AT LAST` 清掉 `no_close`。第一份開 spool、最後一份關 spool，中間全部接在同一個 spool job 裡。
+
+**Smart Forms 的 Function Module 名稱為什麼不能寫死？**
+名稱是各系統在啟用 Smart Form 時自動產生的，DEV、QA、PRD 不保證一樣。用 `SSF_FUNCTION_MODULE_NAME` 傳入表單名稱，取得當下系統的 FM 名稱再動態呼叫。
