@@ -1,5 +1,6 @@
 import { QuartzConfig } from "./quartz/cfg"
 import * as Plugin from "./quartz/plugins"
+import { brandImage } from "./quartz/util/ogBrand"
 
 /**
  * Quartz 4 Configuration
@@ -93,8 +94,8 @@ const config: QuartzConfig = {
       Plugin.Static(),
       Plugin.Favicon(),
       Plugin.NotFoundPage(),
-      // Comment out CustomOgImages to speed up build time
-      //Plugin.CustomOgImages(),
+      // 每篇文章各自產一張預覽圖，版型在 quartz/util/ogBrand.tsx
+      Plugin.CustomOgImages({ imageStructure: brandImage }),
     ],
   },
 }
