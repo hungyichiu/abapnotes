@@ -33,6 +33,7 @@ pin: true
 
 ### SAP Business One
 
+- [[sap-b1-setup-order|SAP B1 系統設定順序：六張圖看懂哪些要先設、哪些改不了]]
 - [[16-SQL預存程序-卡控與自動化|SAP B1 預存程序卡控：用 TransactionNotification 擋下不合規的資料]]
 - [[24-如何設計核准範本|SAP B1 核准範本盤點：用 SQL 查出每個核准階段由誰負責]]
 - [[25-SAP-B1-授權管理|SAP B1 授權管理：識別碼查詢、更新流程與故障排除]]
