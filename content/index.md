@@ -34,6 +34,7 @@ pin: true
 ### SAP Business One
 
 - [[b1-setup-order|SAP B1 系統設定順序：六張圖看懂哪些要先設、哪些改不了]]
+- [[b1-opening-balance|SAP B1 開帳資料匯入：總帳、應收應付、期初庫存三條線]]
 - [[b1-stored-procedure-validation|SAP B1 預存程序卡控：用 TransactionNotification 擋下不合規的資料]]
 - [[b1-approval-template-audit|SAP B1 核准範本盤點：用 SQL 查出每個核准階段由誰負責]]
 - [[b1-license-management|SAP B1 授權管理：識別碼查詢、更新流程與故障排除]]
