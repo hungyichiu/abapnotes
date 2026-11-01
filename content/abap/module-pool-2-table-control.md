@@ -20,7 +20,7 @@ keywords:
 
 ## 前言
 
-搞懂 [[Module-Pool-基礎-對話框設計|PBO/PAI 這組基礎事件]]後，實務上的 ABAP Module Pool 開發多半會碰到更複雜的畫面需求：一次顯示多筆資料、依條件動態隱藏欄位、下拉選單要依上層欄位動態篩選。
+搞懂 [[module-pool-1-basics|PBO/PAI 這組基礎事件]]後，實務上的 ABAP Module Pool 開發多半會碰到更複雜的畫面需求：一次顯示多筆資料、依條件動態隱藏欄位、下拉選單要依上層欄位動態篩選。
 
 這篇整理 Table Control、Tab Strip、動態欄位屬性、動態篩選的下拉選單、F4/F1 Help 這幾個進階應用。
 
@@ -268,4 +268,4 @@ ENDIF.
 
 ## 相關閱讀
 
-- [[Module-Pool-基礎-對話框設計]]：PBO/PAI、Subscreen、Modal Dialog、畫面堆疊、CHAIN
+- [[module-pool-1-basics]]：PBO/PAI、Subscreen、Modal Dialog、畫面堆疊、CHAIN

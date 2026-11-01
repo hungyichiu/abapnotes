@@ -22,7 +22,7 @@ keywords:
 
 ALV Report 能處理大部分的查詢與清單需求，但遇到需要客製化輸入畫面、多步驟操作流程（例如先輸入單號、再跳到明細畫面確認）的場景，就得靠 ABAP 的 Module Pool Programming（也叫 Dialog Programming）。
 
-這篇整理 Module Pool 最基礎的事件模型、畫面切換與對話框設計。Table Control、動態篩選這些進階應用都建立在這些機制上，放在 [[Module-Pool-進階-TableControl與動態篩選|進階篇]]。
+這篇整理 Module Pool 最基礎的事件模型、畫面切換與對話框設計。Table Control、動態篩選這些進階應用都建立在這些機制上，放在 [[module-pool-2-table-control|進階篇]]。
 
 ---
 
@@ -43,7 +43,7 @@ Module Pool 是一組 Screen（畫面）、Include、Transaction 組合起來的
 - **POV（Process On Value-Request）**：使用者按 F4 時觸發
 - **POH（Process On Help-Request）**：使用者按 F1 時觸發
 
-POV、POH 牽涉到 F4/F1 客製化的實作，留到 [[Module-Pool-進階-TableControl與動態篩選|進階篇]] 的 F4/F1 Help 段落再展開。這篇先專注在 PBO/PAI 這組最基礎的事件。
+POV、POH 牽涉到 F4/F1 客製化的實作，留到 [[module-pool-2-table-control|進階篇]] 的 F4/F1 Help 段落再展開。這篇先專注在 PBO/PAI 這組最基礎的事件。
 
 要給使用者執行 Module Pool 程式，必須先建立對應的 Transaction Code（`SE93`）。開發時可以在 `SE80` 或 `SE51` 用測試功能直接跑畫面，但正式使用一定要有 T-Code。
 
@@ -205,4 +205,4 @@ ENDCHAIN.
 
 ## 相關閱讀
 
-- [[Module-Pool-進階-TableControl與動態篩選]]：Table Control、F4/F1 Help、動態下拉選單
+- [[module-pool-2-table-control]]：Table Control、F4/F1 Help、動態下拉選單
